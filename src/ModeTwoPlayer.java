@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.Timer;
 
@@ -11,8 +13,7 @@ import javax.swing.JPanel;
 public class ModeTwoPlayer extends JPanel {
     private ToolBoard toolBoard;
     private ToolDice toolDice;
-    private JPanel bangDiem;
-    JLabel player1Label, player2Label, timeLabel;
+    JLabel player1Label, player2Label, timeLabel, infoLabel;
     JLabel scorePlayer1Label, scorePlayer2Label;
     private Timer timer;
     private int currentPlayer;
@@ -37,32 +38,49 @@ public class ModeTwoPlayer extends JPanel {
         scorePlayer2Label.setFont(font);
         timeLabel = new JLabel("", JLabel.CENTER);
         timeLabel.setFont(font);
-        JPanel panelPlayers = new JPanel(new GridLayout(2, 2));
-        panelPlayers.add(player1Label);
-        panelPlayers.add(player2Label);
-        panelPlayers.add(scorePlayer1Label);
-        panelPlayers.add(scorePlayer2Label);
-        bangDiem = new JPanel(new BorderLayout());
-        bangDiem.add(panelPlayers, BorderLayout.CENTER);
-        bangDiem.add(timeLabel, BorderLayout.SOUTH);
 
-        this.add(bangDiem);
-        bangDiem.setBounds(300, 0, 200, 60);
+        JPanel panelPlayers = new JPanel(new GridBagLayout());
+        panelPlayers.setBounds(10, 243, 85, 172);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        // c.weighty = 1;
+        panelPlayers.add(player1Label, c);
+        c.gridy = 1;
+        // c.weighty = 1;
+        panelPlayers.add(scorePlayer1Label, c);
+        c.gridy = 2;
+        c.weighty = 0.1;
+        panelPlayers.add(new JLabel(), c);
+        c.gridy = 3;
+        c.weighty = 0;
+        panelPlayers.add(scorePlayer2Label, c);
+        c.gridy = 4;
+        // c.weighty = 1;
+        panelPlayers.add(player2Label, c);
+        this.add(panelPlayers);
+
+        JPanel infoPanel = new JPanel(new GridLayout(2, 1));
+        infoLabel = new JLabel("Player1's turn", JLabel.CENTER);
+        timeLabel = new JLabel("", JLabel.CENTER);
+        infoPanel.add(infoLabel);
+        infoPanel.add(timeLabel);
+        infoPanel.setBounds(286, 11, 206, 46);
+        this.add(infoPanel);
 
         toolBoard = new ToolBoard();
-        toolBoard.setBounds(0, 150, toolBoard.getPreferredSize().width, toolBoard.getPreferredSize().height);
+        toolBoard.setBounds(143, 79, 502, 502);
         this.add(toolBoard);
 
         toolDice = new ToolDice();
-        toolDice.setBounds(toolBoard.getPreferredSize().width + 20, 150,
-                toolDice.getPreferredSize().width, toolDice.getPreferredSize().height);
+        toolDice.setBounds(700, 213, 168, 224);
 
         this.add(toolDice);
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        frame.setSize(800, 800);
+        frame.setSize(906, 680);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         ModeTwoPlayer modeTwoPlayer = new ModeTwoPlayer();
