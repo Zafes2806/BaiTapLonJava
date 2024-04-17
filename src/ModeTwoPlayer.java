@@ -40,7 +40,7 @@ public class ModeTwoPlayer extends JPanel {
         timeLabel.setFont(font);
 
         JPanel panelPlayers = new JPanel(new GridBagLayout());
-        panelPlayers.setBounds(10, 243, 85, 172);
+        panelPlayers.setBounds(10, 251, 85, 150);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
