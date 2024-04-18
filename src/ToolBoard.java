@@ -93,7 +93,7 @@ public class ToolBoard extends JPanel {
 		return boardSize;
 	}
 
-	private boolean isValidMove(int deltaX, int deltaY) {
+	public boolean isValidMove(int deltaX, int deltaY) {
 		if (choiceX + deltaX < 0 || choiceX + deltaX >= boardSize)
 			return false;
 		if (choiceY + deltaY < 0 || choiceY + deltaY >= boardSize)
@@ -104,20 +104,5 @@ public class ToolBoard extends JPanel {
 	private void moveChoice(int deltaX, int deltaY) {
 		choiceX += deltaX;
 		choiceY += deltaY;
-	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ToolBoard toolBoard = new ToolBoard();
-		frame.setSize(1000, 1000);
-		frame.setLocationRelativeTo(null);
-		JPanel centrer = new JPanel();
-		centrer.setSize(700, 700);
-		centrer.add(toolBoard);
-		centrer.setBorder(BorderFactory.createLineBorder(Color.red));
-		frame.add(centrer);
-
-		frame.setVisible(true);
 	}
 }
