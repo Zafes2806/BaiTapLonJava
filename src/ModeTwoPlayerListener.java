@@ -61,6 +61,10 @@ public class ModeTwoPlayerListener implements KeyListener {
         modeTwoPlayer.completePlayerMove();
         if (modeTwoPlayer.checkWin())
             return;
+        if (modeTwoPlayer.getPlayer1Plays() == modeTwoPlayer.getPlayer2Plays()) {
+            modeTwoPlayer.setRound(modeTwoPlayer.getRound() + 1);
+            modeTwoPlayer.updateRound();
+        }
         modeTwoPlayer.setRemainingTime(ModeTwoPlayer.MAX_TIME);
         modeTwoPlayer.updateTimeLabel();
         modeTwoPlayer.setRemainingMoves(ModeTwoPlayer.NUM_MOVES);

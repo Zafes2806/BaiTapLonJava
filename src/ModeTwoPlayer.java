@@ -64,17 +64,20 @@ public class ModeTwoPlayer extends JPanel {
         panelPlayers.add(player2Label, c);
         this.add(panelPlayers);
 
-        JPanel infoPanel = new JPanel(new GridLayout(3, 1));
+        JPanel infoPanel = new JPanel(new GridLayout(4, 1));
+        roundLabel = new JLabel("", JLabel.CENTER);
+        roundLabel.setFont(font);
         infoLabel = new JLabel("Player1's turn", JLabel.CENTER);
         infoLabel.setFont(font);
         remainingMovesLabel = new JLabel("", JLabel.CENTER);
         remainingMovesLabel.setFont(font);
         timeLabel = new JLabel("", JLabel.CENTER);
         timeLabel.setFont(font);
+        infoPanel.add(roundLabel);
         infoPanel.add(infoLabel);
         infoPanel.add(remainingMovesLabel);
         infoPanel.add(timeLabel);
-        infoPanel.setBounds(286, 11, 206, 46);
+        infoPanel.setBounds(286, 11, 206, 60);
         this.add(infoPanel);
 
         toolBoard = new ToolBoard();
@@ -94,10 +97,15 @@ public class ModeTwoPlayer extends JPanel {
                     if (currentPlayer == player1)
                         player1Plays--;
                     else
-                        player1Plays--;
+                        player2Plays--;
                     if (checkWin())
                         return;
+                    if (player1Plays == player2Plays) {
+                        round++;
+                        updateRound();
+                    }
                     remainingMoves = NUM_MOVES;
+                    updateRemainingMoves();
                     switchPlayer();
                 }
                 updateTimeLabel();
@@ -108,11 +116,13 @@ public class ModeTwoPlayer extends JPanel {
         remainingMoves = NUM_MOVES;
         player1Plays = player2Plays = NUM_PLAYS;
         player1Score = player2Score = 0;
+        round = 1;
         ModeTwoPlayerListener modeTwoPlayerListener = new ModeTwoPlayerListener(this);
         this.addKeyListener(modeTwoPlayerListener);
         timer.start();
         updateTimeLabel();
         updateRemainingMoves();
+        updateRound();
     }
 
     public void updateTimeLabel() {
@@ -125,6 +135,10 @@ public class ModeTwoPlayer extends JPanel {
 
     public void updateScorePlayer2() {
         scorePlayer2Label.setText(player2Score + "");
+    }
+
+    public void updateRound() {
+        roundLabel.setText("Round: " + round);
     }
 
     public void updateRemainingMoves() {
