@@ -11,29 +11,26 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
-public class ModeTwoPlayer extends JPanel {
+public class ModeOnePlayer extends JPanel {
     private ToolBoard toolBoard;
     private ToolDice toolDice;
-    JLabel timeLabel, infoLabel, remainingMovesLabel, roundLabel;
-    JLabel scorePlayer1Label, scorePlayer2Label;
+    private JLabel timeLabel, infoLabel, remainingMovesLabel, roundLabel;
+    private JLabel scorePlayer1Label;
     private Timer timer;
     private int currentPlayer;
     private final int player1 = 1;
-    private final int player2 = 2;
     public static final int MAX_TIME = 30;
     public static final int NUM_PLAYS = 5;
     public static final int NUM_MOVES = 3;
     private int remainingTime;
     private int remainingMoves;
     private int player1Plays;
-    private int player2Plays;
     private int player1Score;
-    private int player2Score;
     private int round;
 
-    ModeTwoPlayer() {
+    ModeOnePlayer() {
         setPreferredSize(new Dimension(700, 600));
-        this.setLayout(null);
+        setLayout(null);
         Font font = new Font("Arial", Font.BOLD, 15);
 
         JPanel panelPlayers = new JPanel(new GridBagLayout());
@@ -41,12 +38,8 @@ public class ModeTwoPlayer extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
         JLabel player1Label = new JLabel("Player 1", JLabel.CENTER);
         player1Label.setFont(font);
-        JLabel player2Label = new JLabel("Player 2", JLabel.CENTER);
-        player2Label.setFont(font);
         scorePlayer1Label = new JLabel("0", JLabel.CENTER);
         scorePlayer1Label.setFont(font);
-        scorePlayer2Label = new JLabel("0", JLabel.CENTER);
-        scorePlayer2Label.setFont(font);
         c.gridx = 0;
         c.gridy = 0;
         panelPlayers.add(player1Label, c);
@@ -57,15 +50,11 @@ public class ModeTwoPlayer extends JPanel {
         panelPlayers.add(new JLabel(), c);
         c.gridy = 3;
         c.weighty = 0;
-        panelPlayers.add(scorePlayer2Label, c);
-        c.gridy = 4;
-        panelPlayers.add(player2Label, c);
-        this.add(panelPlayers);
 
         JPanel infoPanel = new JPanel(new GridLayout(4, 1));
         roundLabel = new JLabel("", JLabel.CENTER);
         roundLabel.setFont(font);
-        infoLabel = new JLabel("Player1's turn", JLabel.CENTER);
+        infoLabel = new JLabel("Player 1's turn", JLabel.CENTER);
         infoLabel.setFont(font);
         remainingMovesLabel = new JLabel("", JLabel.CENTER);
         remainingMovesLabel.setFont(font);
@@ -76,15 +65,15 @@ public class ModeTwoPlayer extends JPanel {
         infoPanel.add(remainingMovesLabel);
         infoPanel.add(timeLabel);
         infoPanel.setBounds(286, 11, 206, 60);
-        this.add(infoPanel);
+        add(infoPanel);
 
         toolBoard = new ToolBoard();
         toolBoard.setBounds(143, 79, 502, 502);
-        this.add(toolBoard);
+        add(toolBoard);
 
         toolDice = new ToolDice();
         toolDice.setBounds(700, 213, 168, 224);
-        this.add(toolDice);
+        add(toolDice);
 
         timer = new Timer(1000, new ActionListener() {
             @Override
@@ -94,13 +83,9 @@ public class ModeTwoPlayer extends JPanel {
                     remainingTime = MAX_TIME;
                     if (currentPlayer == player1)
                         player1Plays--;
-                    else
-                        player2Plays--;
-                    if (checkWin())
+                    if (checkWin()) {
+                        endGame();
                         return;
-                    if (player1Plays == player2Plays) {
-                        round++;
-                        updateRound();
                     }
                     remainingMoves = NUM_MOVES;
                     updateRemainingMoves();
@@ -112,15 +97,7 @@ public class ModeTwoPlayer extends JPanel {
         currentPlayer = player1;
         remainingTime = MAX_TIME;
         remainingMoves = NUM_MOVES;
-        player1Plays = player2Plays = NUM_PLAYS;
-        player1Score = player2Score = 0;
         round = 1;
-        ModeTwoPlayerListener modeTwoPlayerListener = new ModeTwoPlayerListener(this);
-        this.addKeyListener(modeTwoPlayerListener);
-        timer.start();
-        updateTimeLabel();
-        updateRemainingMoves();
-        updateRound();
     }
 
     public void updateTimeLabel() {
@@ -128,11 +105,7 @@ public class ModeTwoPlayer extends JPanel {
     }
 
     public void updateScorePlayer1() {
-        scorePlayer1Label.setText(player1Score + "");
-    }
-
-    public void updateScorePlayer2() {
-        scorePlayer2Label.setText(player2Score + "");
+        scorePlayer1Label.setText(String.valueOf(player1Score));
     }
 
     public void updateRound() {
@@ -143,11 +116,6 @@ public class ModeTwoPlayer extends JPanel {
         remainingMovesLabel.setText("Remaining Moves: " + remainingMoves);
     }
 
-    public void switchPlayer() {
-        currentPlayer = (currentPlayer == player1) ? player2 : player1;
-        infoLabel.setText("Player" + currentPlayer + "'s turn");
-    }
-
     public void completePlayerMove() {
         if (currentPlayer == player1) {
             if (checkWinningMove()) {
@@ -155,17 +123,11 @@ public class ModeTwoPlayer extends JPanel {
             }
             player1Plays--;
             updateScorePlayer1();
-        } else {
-            if (checkWinningMove()) {
-                player2Score++;
-            }
-            player2Plays--;
-            updateScorePlayer2();
         }
     }
 
     private boolean checkWinningMove() {
-        return toolDice.getChoice().compareTo(toolBoard.getChoice()) == 1;
+        return toolDice.getChoice().equals(toolBoard.getChoice());
     }
 
     public ToolBoard getToolBoard() {
@@ -224,14 +186,6 @@ public class ModeTwoPlayer extends JPanel {
         this.scorePlayer1Label = scorePlayer1Label;
     }
 
-    public JLabel getScorePlayer2Label() {
-        return scorePlayer2Label;
-    }
-
-    public void setScorePlayer2Label(JLabel scorePlayer2Label) {
-        this.scorePlayer2Label = scorePlayer2Label;
-    }
-
     public int getRemainingTime() {
         return remainingTime;
     }
@@ -256,28 +210,12 @@ public class ModeTwoPlayer extends JPanel {
         this.player1Plays = player1Plays;
     }
 
-    public int getPlayer2Plays() {
-        return player2Plays;
-    }
-
-    public void setPlayer2Plays(int player2Plays) {
-        this.player2Plays = player2Plays;
-    }
-
     public int getPlayer1Score() {
         return player1Score;
     }
 
     public void setPlayer1Score(int player1Score) {
         this.player1Score = player1Score;
-    }
-
-    public int getPlayer2Score() {
-        return player2Score;
-    }
-
-    public void setPlayer2Score(int player2Score) {
-        this.player2Score = player2Score;
     }
 
     public int getRound() {
@@ -288,50 +226,36 @@ public class ModeTwoPlayer extends JPanel {
         this.round = round;
     }
 
-    public boolean checkWin() {
-        if (player1Plays != player2Plays)
-            return false;
-        if (player1Plays > 0 && player1Score - player2Score == 3) {
-            endGame("1");
-            return true;
-        }
-        if (player1Plays > 0 && player2Score - player1Score == 3) {
-            endGame("2");
-            return true;
-        }
-        if (player1Plays == 0 && player1Score > player2Score) {
-            endGame("1");
-            return true;
-        }
-        if (player1Plays == 0 && player2Score > player1Score) {
-            endGame("2");
-            return true;
-        }
-        if (player1Plays == 0 && player2Score == player1Score) {
-            endGame("draw");
-            return true;
-        }
-        return false;
+    public void startGame() {
+        timer.start();
+        updateRound();
+        updateRemainingMoves();
+        updateTimeLabel();
     }
 
-    private void endGame(String winner) {
+    private void switchPlayer() {
+        currentPlayer = player1;
+        infoLabel.setText("Player 1's turn");
+    }
+
+    private boolean checkWin() {
+        return player1Plays == 0;
+    }
+
+    private void endGame() {
         timer.stop();
-        if (winner.equals("draw"))
-            infoLabel.setText("It's a draw");
-        else
-            infoLabel.setText("Player" + winner + " wins!");
-        this.setEnabled(false);
+        infoLabel.setText("Game Over");
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(906, 680);
+        JFrame frame = new JFrame("Mode One Player");
+        ModeOnePlayer modeOnePlayer = new ModeOnePlayer();
+        frame.setContentPane(modeOnePlayer);
+        frame.setSize(1000, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.pack();
         frame.setLocationRelativeTo(null);
-        ModeTwoPlayer modeTwoPlayer = new ModeTwoPlayer();
-        frame.add(modeTwoPlayer);
-        modeTwoPlayer.setFocusable(true);
         frame.setVisible(true);
+        modeOnePlayer.startGame();
     }
-
 }
