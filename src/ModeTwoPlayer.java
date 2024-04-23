@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -117,6 +118,8 @@ public class ModeTwoPlayer extends JPanel {
         round = 1;
         ModeTwoPlayerListener modeTwoPlayerListener = new ModeTwoPlayerListener(this);
         this.addKeyListener(modeTwoPlayerListener);
+        this.setFocusable(true);
+        this.setRequestFocusEnabled(true);
         timer.start();
         updateTimeLabel();
         updateRemainingMoves();
