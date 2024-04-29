@@ -7,9 +7,8 @@ import javax.swing.border.LineBorder;
 public class Paper extends Tool {
 
     Paper() {
-        Image image = new ImageIcon("image/Paper.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image image = new ImageIcon("res/image/Paper.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         this.setIcon(new ImageIcon(image));
-        setBorder(new LineBorder(Color.GRAY, 2));
     }
 
     @Override

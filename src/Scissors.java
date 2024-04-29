@@ -7,9 +7,8 @@ import javax.swing.border.LineBorder;
 public class Scissors extends Tool {
 
     Scissors() {
-        Image image = new ImageIcon("image/Scissors.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image image = new ImageIcon("res/image/Scissors.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         this.setIcon(new ImageIcon(image));
-        setBorder(new LineBorder(Color.GRAY, 2));
     }
 
     @Override

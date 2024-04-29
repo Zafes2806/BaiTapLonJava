@@ -13,7 +13,7 @@ public class ToolBoard extends JPanel {
 	private int choiceY = boardSize / 2;
 
 	public ToolBoard() {
-		setLayout(new GridLayout(boardSize, boardSize, 2, 2));
+		setLayout(new GridLayout(boardSize, boardSize));
 		setPreferredSize(new Dimension(boardHeight, boardWidth));
 		tools = new Tool[boardSize][boardSize];
 		Random random = new Random();

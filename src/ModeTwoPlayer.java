@@ -1,12 +1,20 @@
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -17,6 +25,8 @@ public class ModeTwoPlayer extends JPanel {
     private ToolDice toolDice;
     JLabel timeLabel, infoLabel, remainingMovesLabel, roundLabel;
     JLabel scorePlayer1Label, scorePlayer2Label;
+    JButton buttonHome, buttonPause, buttonResume, buttonSave, buttonMute, buttonUnmute;
+    Font maitree_15;
     private Timer timer;
     private int currentPlayer;
     private final int player1 = 1;
@@ -32,22 +42,88 @@ public class ModeTwoPlayer extends JPanel {
     private int player2Score;
     private int round;
 
+    private void initControlButtons() {
+        Image imageHome1 = new ImageIcon(URLImage.home1).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageHome2 = new ImageIcon(URLImage.home2).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imagePause1 = new ImageIcon(URLImage.pause1).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imagePause2 = new ImageIcon(URLImage.pause2).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageResume1 = new ImageIcon(URLImage.resume1).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageResume2 = new ImageIcon(URLImage.resume2).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageSave1 = new ImageIcon(URLImage.save1).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageSave2 = new ImageIcon(URLImage.save2).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageMute1 = new ImageIcon(URLImage.mute1).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageMute2 = new ImageIcon(URLImage.mute2).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageUnmute1 = new ImageIcon(URLImage.unmute1).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image imageUnmute2 = new ImageIcon(URLImage.unmute2).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        buttonHome = new JButton(new ImageIcon(imageHome1));
+        buttonHome.setRolloverIcon(new ImageIcon(imageHome2));
+        buttonHome.setBorderPainted(false);
+        buttonHome.setContentAreaFilled(false);
+        buttonHome.setFocusPainted(false);
+        buttonHome.setBounds(5, 5, 40, 40);
+        this.add(buttonHome);
+
+        buttonPause = new JButton(new ImageIcon(imagePause1));
+        buttonPause.setRolloverIcon(new ImageIcon(imagePause2));
+        buttonPause.setBorderPainted(false);
+        buttonPause.setContentAreaFilled(false);
+        buttonPause.setFocusPainted(false);
+        buttonPause.setBounds(50, 5, 40, 40);
+        this.add(buttonPause);
+
+        buttonResume = new JButton(new ImageIcon(imageResume1));
+        buttonResume.setRolloverIcon(new ImageIcon(imageResume2));
+        buttonResume.setBorderPainted(false);
+        buttonResume.setContentAreaFilled(false);
+        buttonResume.setFocusPainted(false);
+        buttonResume.setBounds(50, 5, 40, 40);
+
+        buttonSave = new JButton(new ImageIcon(imageSave1));
+        buttonSave.setRolloverIcon(new ImageIcon(imageSave2));
+        buttonSave.setBorderPainted(false);
+        buttonSave.setContentAreaFilled(false);
+        buttonSave.setFocusPainted(false);
+        buttonSave.setBounds(5, 50, 40, 40);
+        this.add(buttonSave);
+
+        buttonMute = new JButton(new ImageIcon(imageMute1));
+        buttonMute.setRolloverIcon(new ImageIcon(imageMute2));
+        buttonMute.setBorderPainted(false);
+        buttonMute.setContentAreaFilled(false);
+        buttonMute.setFocusPainted(false);
+        buttonMute.setBounds(50, 50, 40, 40);
+        this.add(buttonMute);
+
+        buttonUnmute = new JButton(new ImageIcon(imageUnmute1));
+        buttonUnmute.setRolloverIcon(new ImageIcon(imageUnmute2));
+        buttonUnmute.setBorderPainted(false);
+        buttonUnmute.setContentAreaFilled(false);
+        buttonUnmute.setFocusPainted(false);
+        buttonUnmute.setBounds(50, 50, 40, 40);
+    }
+
     ModeTwoPlayer() {
-        setPreferredSize(new Dimension(700, 600));
+        setPreferredSize(new Dimension(1100, 800));
         this.setLayout(null);
-        Font font = new Font("Arial", Font.BOLD, 15);
+        try {
+            File maitreeFont = new File("res/font/Maitree-Bold.ttf");
+            maitree_15 = Font.createFont(Font.TRUETYPE_FONT, maitreeFont).deriveFont(Font.BOLD, 16);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
 
         JPanel panelPlayers = new JPanel(new GridBagLayout());
-        panelPlayers.setBounds(10, 251, 85, 150);
+        panelPlayers.setBounds(30, 335, 85, 150);
         GridBagConstraints c = new GridBagConstraints();
         JLabel player1Label = new JLabel("Player 1", JLabel.CENTER);
-        player1Label.setFont(font);
+        player1Label.setFont(maitree_15);
         JLabel player2Label = new JLabel("Player 2", JLabel.CENTER);
-        player2Label.setFont(font);
+        player2Label.setFont(maitree_15);
         scorePlayer1Label = new JLabel("0", JLabel.CENTER);
-        scorePlayer1Label.setFont(font);
+        scorePlayer1Label.setFont(maitree_15);
         scorePlayer2Label = new JLabel("0", JLabel.CENTER);
-        scorePlayer2Label.setFont(font);
+        scorePlayer2Label.setFont(maitree_15);
         c.gridx = 0;
         c.gridy = 0;
         panelPlayers.add(player1Label, c);
@@ -61,30 +137,34 @@ public class ModeTwoPlayer extends JPanel {
         panelPlayers.add(scorePlayer2Label, c);
         c.gridy = 4;
         panelPlayers.add(player2Label, c);
+        panelPlayers.setOpaque(false);
         this.add(panelPlayers);
 
         JPanel infoPanel = new JPanel(new GridLayout(4, 1));
         roundLabel = new JLabel("", JLabel.CENTER);
-        roundLabel.setFont(font);
+        roundLabel.setFont(maitree_15);
         infoLabel = new JLabel("Player1's turn", JLabel.CENTER);
-        infoLabel.setFont(font);
+        infoLabel.setFont(maitree_15);
         remainingMovesLabel = new JLabel("", JLabel.CENTER);
-        remainingMovesLabel.setFont(font);
+        remainingMovesLabel.setFont(maitree_15);
         timeLabel = new JLabel("", JLabel.CENTER);
-        timeLabel.setFont(font);
+        timeLabel.setFont(maitree_15);
         infoPanel.add(roundLabel);
         infoPanel.add(infoLabel);
         infoPanel.add(remainingMovesLabel);
         infoPanel.add(timeLabel);
-        infoPanel.setBounds(286, 11, 206, 60);
+        infoPanel.setBounds(392, 29, 210, 80);
+        infoPanel.setOpaque(false);
         this.add(infoPanel);
 
         toolBoard = new ToolBoard();
-        toolBoard.setBounds(143, 79, 502, 502);
+        toolBoard.setBounds(239, 170, 502, 502);
+        toolBoard.setOpaque(false);
         this.add(toolBoard);
 
         toolDice = new ToolDice();
-        toolDice.setBounds(700, 213, 168, 224);
+        toolDice.setBounds(875, 297, 168, 224);
+        toolDice.setOpaque(false);
         this.add(toolDice);
 
         timer = new Timer(1000, new ActionListener() {
@@ -110,6 +190,7 @@ public class ModeTwoPlayer extends JPanel {
                 updateTimeLabel();
             }
         });
+        initControlButtons();
         currentPlayer = player1;
         remainingTime = MAX_TIME;
         remainingMoves = NUM_MOVES;
@@ -124,6 +205,14 @@ public class ModeTwoPlayer extends JPanel {
         updateTimeLabel();
         updateRemainingMoves();
         updateRound();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon imageIcon = new ImageIcon(URLImage.background2Player);
+        Image image = imageIcon.getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
     public void updateTimeLabel() {
@@ -328,7 +417,7 @@ public class ModeTwoPlayer extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        frame.setSize(906, 680);
+        frame.setSize(1100, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         ModeTwoPlayer modeTwoPlayer = new ModeTwoPlayer();
