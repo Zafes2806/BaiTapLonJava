@@ -14,29 +14,32 @@ import untils.ImagePaths;
 
 public class SinglePlayerRulesDialog extends JPanel {
     private final int width = 674;
-    private final int height = 465;
-    private JButton exit;
+    private final int height = 485;
+    private JButton btnOk;
 
     public SinglePlayerRulesDialog() {
         setLayout(null);
-        Image imageExit1 = new ImageIcon(ImagePaths.GAME_EXIT_1).getImage();
-        Image imageExit2 = new ImageIcon(ImagePaths.GAME_EXIT_2).getImage();
         setPreferredSize(new Dimension(width, height));
-        exit = new JButton(new ImageIcon(imageExit1));
-        exit.setRolloverIcon(new ImageIcon(imageExit2));
-        exit.setBorderPainted(false);
-        exit.setContentAreaFilled(false);
-        exit.setFocusPainted(false);
-        exit.setBounds(620, 7, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
-        add(exit);
+
+        Image imageOK1 = new ImageIcon(ImagePaths.GAME_OK_1).getImage();
+        Image imageOK2 = new ImageIcon(ImagePaths.GAME_OK_2).getImage();
+
+        btnOk = new JButton(new ImageIcon(imageOK1));
+        btnOk.setRolloverIcon(new ImageIcon(imageOK2));
+        btnOk.setBorderPainted(false);
+        btnOk.setContentAreaFilled(false);
+        btnOk.setFocusPainted(false);
+        btnOk.setBounds(312, 425, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        add(btnOk);
+
         setVisible(false);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image imageAboutDialog = new ImageIcon(ImagePaths.DIALOG_RULES_SINGLE_PLAYER).getImage();
-        g.drawImage(imageAboutDialog, 0, 0, width, height, this);
+        Image image = new ImageIcon(ImagePaths.DIALOG_RULES_SINGLE_PLAYER).getImage();
+        g.drawImage(image, 0, 0, width, height - 20, this);
     }
 
     public static void main(String[] args) {

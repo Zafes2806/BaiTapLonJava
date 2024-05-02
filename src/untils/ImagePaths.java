@@ -46,9 +46,9 @@ public class ImagePaths {
     public static final String MENU_EXIT_1 = "res/image/menu_button/MenuExit1.png";
     public static final String MENU_EXIT_2 = "res/image/menu_button/MenuExit2.png";
     public static final String MENU_RANK_1 = "res/image/menu_button/MenuRank1.png";
-    public static final String MENU_RANK_2 = "res/image/menubutton/MenuRank2.png";
+    public static final String MENU_RANK_2 = "res/image/menu_button/MenuRank2.png";
     public static final String MENU_RESTART_1 = "res/image/menu_button/MenuRestart1.png";
-    public static final String MENU_RESTART_2 = "res/image/menubutton/MenuRestart2.png";
+    public static final String MENU_RESTART_2 = "res/image/menu_button/MenuRestart2.png";
     public static final String MENU_SETTINGS_1 = "res/image/menu_button/MenuSettings1.png";
     public static final String MENU_SETTINGS_2 = "res/image/menu_button/MenuSettings2.png";
     public static final String MENU_SINGLE_PLAYER_1 = "res/image/menu_button/MenuSinglePlayer1.png";
