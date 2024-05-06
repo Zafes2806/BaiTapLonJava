@@ -1,4 +1,4 @@
-package controller;
+package controller.panel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,10 +7,10 @@ import java.awt.event.KeyListener;
 
 import view.panel.ModeTwoPlayer;
 
-public class ModeTwoPlayerListener implements KeyListener, ActionListener {
+public class ModeTwoPlayerController implements KeyListener, ActionListener {
     private ModeTwoPlayer modeTwoPlayer;
 
-    public ModeTwoPlayerListener(ModeTwoPlayer modeTwoPlayer) {
+    public ModeTwoPlayerController(ModeTwoPlayer modeTwoPlayer) {
         this.modeTwoPlayer = modeTwoPlayer;
     }
 

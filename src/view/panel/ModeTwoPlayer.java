@@ -15,26 +15,20 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import controller.ModeTwoPlayerListener;
-import object.ToolBoard;
-import object.ToolDice;
+import controller.panel.ModeTwoPlayerController;
 import untils.ImagePaths;
+import untils.Untils;
+import view.object.ToolBoard;
+import view.object.ToolDice;
 
 import javax.swing.JPanel;
 
 public class ModeTwoPlayer extends JPanel {
-    private ModeTwoPlayerListener modeTwoPlayerListener = new ModeTwoPlayerListener(this);
-    private ToolBoard toolBoard;
-    private ToolDice toolDice;
-    private JLabel timeLabel, infoLabel, remainingMovesLabel, roundLabel;
-    private JLabel scorePlayer1Label, scorePlayer2Label;
-    private JButton buttonHome, buttonPause, buttonResume, buttonSave, buttonMute, buttonUnmute;
-    private Font maitree_16;
-    private Timer timer;
+    public static final int WIDTH = 1100;
+    public static final int HEIGHT = 800;
     private int currentPlayer;
     private final int player1 = 1;
     private final int player2 = 2;
@@ -49,82 +43,19 @@ public class ModeTwoPlayer extends JPanel {
     private int player2Score;
     private int round;
 
-    private void initControlButtons() {
-        Image imageHome1 = new ImageIcon(ImagePaths.GAME_HOME_1).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageHome2 = new ImageIcon(ImagePaths.GAME_HOME_2).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imagePause1 = new ImageIcon(ImagePaths.GAME_PAUSE_1).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imagePause2 = new ImageIcon(ImagePaths.GAME_PAUSE_2).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageResume1 = new ImageIcon(ImagePaths.GAME_RESUME_1).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageResume2 = new ImageIcon(ImagePaths.GAME_RESUME_2).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageSave1 = new ImageIcon(ImagePaths.GAME_SAVE_1).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageSave2 = new ImageIcon(ImagePaths.GAME_SAVE_2).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageMute1 = new ImageIcon(ImagePaths.GAME_MUTE_1).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageMute2 = new ImageIcon(ImagePaths.GAME_MUTE_2).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageUnmute1 = new ImageIcon(ImagePaths.GAME_UNMUTE_1).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        Image imageUnmute2 = new ImageIcon(ImagePaths.GAME_UNMUTE_2).getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
+    private TwoPlayerPanel twoPlayerPanel;
+    private ModeTwoPlayerController modeTwoPlayerListener;
+    private ToolBoard toolBoard;
+    private ToolDice toolDice;
+    private JLabel timeLabel, infoLabel, remainingMovesLabel, roundLabel;
+    private JLabel scorePlayer1Label, scorePlayer2Label;
+    private JButton btnHome, btnPause, btnResume, btnSave, btnMute, btnUnmute;
+    private Font maitree_16;
+    private Timer timer;
 
-        buttonHome = new JButton(new ImageIcon(imageHome1));
-        buttonHome.setActionCommand("buttonHome");
-        buttonHome.setRolloverIcon(new ImageIcon(imageHome2));
-        buttonHome.setBorderPainted(false);
-        buttonHome.setContentAreaFilled(false);
-        buttonHome.setFocusPainted(false);
-        buttonHome.setBounds(5, 5, 50, 50);
-        buttonHome.addActionListener(modeTwoPlayerListener);
-        this.add(buttonHome);
-
-        buttonPause = new JButton(new ImageIcon(imagePause1));
-        buttonPause.setRolloverIcon(new ImageIcon(imagePause2));
-        buttonPause.setBorderPainted(false);
-        buttonPause.setContentAreaFilled(false);
-        buttonPause.setFocusPainted(false);
-        buttonPause.setBounds(60, 5, 50, 50);
-        this.add(buttonPause);
-
-        buttonResume = new JButton(new ImageIcon(imageResume1));
-        buttonResume.setRolloverIcon(new ImageIcon(imageResume2));
-        buttonResume.setBorderPainted(false);
-        buttonResume.setContentAreaFilled(false);
-        buttonResume.setFocusPainted(false);
-        buttonResume.setBounds(60, 5, 50, 50);
-
-        buttonSave = new JButton(new ImageIcon(imageSave1));
-        buttonSave.setRolloverIcon(new ImageIcon(imageSave2));
-        buttonSave.setBorderPainted(false);
-        buttonSave.setContentAreaFilled(false);
-        buttonSave.setFocusPainted(false);
-        buttonSave.setBounds(5, 60, 50, 50);
-        this.add(buttonSave);
-
-        buttonMute = new JButton(new ImageIcon(imageMute1));
-        buttonMute.setRolloverIcon(new ImageIcon(imageMute2));
-        buttonMute.setBorderPainted(false);
-        buttonMute.setContentAreaFilled(false);
-        buttonMute.setFocusPainted(false);
-        buttonMute.setBounds(60, 60, 50, 50);
-        this.add(buttonMute);
-
-        buttonUnmute = new JButton(new ImageIcon(imageUnmute1));
-        buttonUnmute.setRolloverIcon(new ImageIcon(imageUnmute2));
-        buttonUnmute.setBorderPainted(false);
-        buttonUnmute.setContentAreaFilled(false);
-        buttonUnmute.setFocusPainted(false);
-        buttonUnmute.setBounds(60, 60, 50, 50);
-    }
-
-    ModeTwoPlayer() {
+    ModeTwoPlayer(TwoPlayerPanel twoPlayerPanel) {
+        this.twoPlayerPanel = twoPlayerPanel;
+        this.modeTwoPlayerListener = new ModeTwoPlayerController(this);
         setPreferredSize(new Dimension(1100, 800));
         this.setLayout(null);
         try {
@@ -135,7 +66,7 @@ public class ModeTwoPlayer extends JPanel {
         }
 
         JPanel panelPlayers = new JPanel(new GridBagLayout());
-        panelPlayers.setBounds(30, 335, 85, 150);
+        panelPlayers.setBounds(30, 355, 85, 150);
         GridBagConstraints c = new GridBagConstraints();
         JLabel player1Label = new JLabel("Player 1", JLabel.CENTER);
         player1Label.setFont(maitree_16);
@@ -174,17 +105,17 @@ public class ModeTwoPlayer extends JPanel {
         infoPanel.add(infoLabel);
         infoPanel.add(remainingMovesLabel);
         infoPanel.add(timeLabel);
-        infoPanel.setBounds(392, 29, 210, 80);
+        infoPanel.setBounds(400, 35, 210, 80);
         infoPanel.setOpaque(false);
         this.add(infoPanel);
 
         toolBoard = new ToolBoard();
-        toolBoard.setBounds(239, 170, 502, 502);
+        toolBoard.setBounds(249, 190, 502, 502);
         toolBoard.setOpaque(false);
         this.add(toolBoard);
 
         toolDice = new ToolDice();
-        toolDice.setBounds(875, 297, 168, 224);
+        toolDice.setBounds(890, 317, 168, 224);
         toolDice.setOpaque(false);
         this.add(toolDice);
 
@@ -226,11 +157,69 @@ public class ModeTwoPlayer extends JPanel {
         updateRound();
     }
 
+    private void initControlButtons() {
+        btnHome = Untils.getButton(ImagePaths.GAME_HOME_1, ImagePaths.GAME_HOME_2);
+        btnHome.setActionCommand("buttonHome");
+        btnHome.setBounds(5, 5, 50, 50);
+        btnHome.addActionListener(modeTwoPlayerListener);
+        this.add(btnHome);
+
+        btnPause = Untils.getButton(ImagePaths.GAME_PAUSE_1, ImagePaths.GAME_PAUSE_2);
+        btnPause.setBounds(60, 5, 50, 50);
+        btnPause.addActionListener(modeTwoPlayerListener);
+        this.add(btnPause);
+
+        btnResume = Untils.getButton(ImagePaths.GAME_RESUME_1, ImagePaths.GAME_RESUME_2);
+        btnResume.setBounds(60, 5, 50, 50);
+        btnResume.addActionListener(modeTwoPlayerListener);
+
+        btnSave = Untils.getButton(ImagePaths.GAME_SAVE_1, ImagePaths.GAME_SAVE_2);
+        btnSave.setBounds(5, 60, 50, 50);
+        btnSave.addActionListener(modeTwoPlayerListener);
+        this.add(btnSave);
+
+
+        btnMute = Untils.getButton(ImagePaths.GAME_MUTE_1, ImagePaths.GAME_MUTE_2);
+        btnMute.setBounds(60, 60, 50, 50);
+        btnMute.addActionListener(modeTwoPlayerListener);
+        this.add(btnMute);
+
+        btnUnmute = Untils.getButton(ImagePaths.GAME_UNMUTE_1, ImagePaths.GAME_UNMUTE_2);
+        btnUnmute.setBounds(60, 60, 50, 50);
+        btnUnmute.addActionListener(modeTwoPlayerListener);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image image = new ImageIcon(ImagePaths.BACKGROUND_TWO_PLAYER).getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    public void open() {
+        setVisible(true);
+    }
+
+    public void close() {
+        setVisible(false);
+    }
+
+    public TwoPlayerPanel getTwoPlayerPanel() {
+        return twoPlayerPanel;
+    }
+
+    private boolean checkWinningMove() {
+        return toolDice.getChoice().compareTo(toolBoard.getChoice()) == 1;
+    }
+
+    public boolean checkWin() {
+        if (player1Plays != player2Plays)
+            return false;
+        if (player1Plays == 0 || Math.abs(player1Score - player2Score) >= 3) {
+            twoPlayerPanel.openResultTwoPlayerDialog();
+            return true;
+        }
+        return false;
     }
 
     public void updateTimeLabel() {
@@ -272,45 +261,6 @@ public class ModeTwoPlayer extends JPanel {
             player2Plays--;
             updateScorePlayer2();
         }
-    }
-
-    private boolean checkWinningMove() {
-        return toolDice.getChoice().compareTo(toolBoard.getChoice()) == 1;
-    }
-
-    public boolean checkWin() {
-        if (player1Plays != player2Plays)
-            return false;
-        if (player1Plays > 0 && player1Score - player2Score == 3) {
-            endGame("1");
-            return true;
-        }
-        if (player1Plays > 0 && player2Score - player1Score == 3) {
-            endGame("2");
-            return true;
-        }
-        if (player1Plays == 0 && player1Score > player2Score) {
-            endGame("1");
-            return true;
-        }
-        if (player1Plays == 0 && player2Score > player1Score) {
-            endGame("2");
-            return true;
-        }
-        if (player1Plays == 0 && player2Score == player1Score) {
-            endGame("draw");
-            return true;
-        }
-        return false;
-    }
-
-    private void endGame(String winner) {
-        timer.stop();
-        if (winner.equals("draw"))
-            infoLabel.setText("It's a draw");
-        else
-            infoLabel.setText("Player" + winner + " wins!");
-        this.setEnabled(false);
     }
 
     public ToolBoard getToolBoard() {
@@ -425,86 +375,11 @@ public class ModeTwoPlayer extends JPanel {
         this.player2Score = player2Score;
     }
 
-    public int getRound() {
+    public int getRound() { 
         return round;
     }
 
-    public void setRound(int round) {
-        this.round = round;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(1100, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        ModeTwoPlayer modeTwoPlayer = new ModeTwoPlayer();
-        frame.add(modeTwoPlayer);
-        modeTwoPlayer.setFocusable(true);
-        frame.setVisible(true);
-    }
-
-    public JButton getButtonHome() {
-        return buttonHome;
-    }
-
-    public void setButtonHome(JButton buttonHome) {
-        this.buttonHome = buttonHome;
-    }
-
-    public JButton getButtonPause() {
-        return buttonPause;
-    }
-
-    public void setButtonPause(JButton buttonPause) {
-        this.buttonPause = buttonPause;
-    }
-
-    public JButton getButtonResume() {
-        return buttonResume;
-    }
-
-    public void setButtonResume(JButton buttonResume) {
-        this.buttonResume = buttonResume;
-    }
-
-    public JButton getButtonSave() {
-        return buttonSave;
-    }
-
-    public void setButtonSave(JButton buttonSave) {
-        this.buttonSave = buttonSave;
-    }
-
-    public JButton getButtonMute() {
-        return buttonMute;
-    }
-
-    public void setButtonMute(JButton buttonMute) {
-        this.buttonMute = buttonMute;
-    }
-
-    public JButton getButtonUnmute() {
-        return buttonUnmute;
-    }
-
-    public void setButtonUnmute(JButton buttonUnmute) {
-        this.buttonUnmute = buttonUnmute;
-    }
-
-    public Timer getTimer() {
-        return timer;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
-
-    public int getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    public void setRound(int i) {
+        round = i;
     }
 }

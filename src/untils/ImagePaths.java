@@ -11,6 +11,7 @@ public class ImagePaths {
     public static final String DIALOG_RANK = "res/image/dialog/RankDialog.png";
     public static final String DIALOG_RULES_SINGLE_PLAYER = "res/image/dialog/SinglePlayerRulesDialog.png";
     public static final String DIALOG_RULES_TWO_PLAYER = "res/image/dialog/TwoPlayerRulesDialog.png";
+    public static final String DIALOG_SETTINGS = "res/image/dialog/SettingsDialog.png";
 
     public static final String GAME_BACK_1 = "res/image/game_button/GameBack1.png";
     public static final String GAME_BACK_2 = "res/image/game_button/GameBack2.png";
@@ -52,13 +53,19 @@ public class ImagePaths {
     public static final String MENU_SETTINGS_1 = "res/image/menu_button/MenuSettings1.png";
     public static final String MENU_SETTINGS_2 = "res/image/menu_button/MenuSettings2.png";
     public static final String MENU_SINGLE_PLAYER_1 = "res/image/menu_button/MenuSinglePlayer1.png";
-    public static final String MENU_SINGER_PLAYER_2 = "res/image/menu_button/MenuSinglePlayer2.png";
+    public static final String MENU_SINGLE_PLAYER_2 = "res/image/menu_button/MenuSinglePlayer2.png";
     public static final String MENU_TWO_PLAYER_1 = "res/image/menu_button/MenuTwoPlayer1.png";
     public static final String MENU_TWO_PLAYER_2 = "res/image/menu_button/MenuTwoPlayer2.png";
+    public static final String MENU_NEW_GAME_1 = "res/image/menu_button/MenuNewGame1.png";
+    public static final String MENU_NEW_GAME_2 = "res/image/menu_button/MenuNewGame2.png";
+    public static final String MENU_ON_1 = "res/image/menu_button/MenuON1.png";
+    public static final String MENU_ON_2 = "res/image/menu_button/MenuON2.png";
+    public static final String MENU_OFF_1 = "res/image/menu_button/MenuOFF1.png";
+    public static final String MENU_OFF_2 = "res/image/menu_button/MenuOFF2.png";
 
     public static final String BACKGROUND_MENU_PANEL = "res/image/panel_background/BackgroundMenuPanel.png";
-    public static final String BACKGROUND_SINGLE_PLAYER = "res/image/panel_background/BackgroundSingerPlayer.png";
-    public static final String BACKGROUND_SINGLE_PLAYER_PANEL = "res/image/panel_background/BackgroundSinglePlayerPanel.png";
+    public static final String BACKGROUND_SINGLE_PLAYER_ = "res/image/panel_background/BackgroundSingerPlayer.png";
+    public static final String BACKGROUND_SINGLE_PLAYER_OPTIONS_PANEL = "res/image/panel_background/BackgroundSinglePlayerOptionsPanel.png";
     public static final String BACKGROUND_TWO_PLAYER = "res/image/panel_background/BackgroundTwoPlayer.png";
     public static final String BACKGROUND_TWO_PLAYER_PANEL = "res/image/panel_background/BackgroundTwoPlayerPanel.png";
 }

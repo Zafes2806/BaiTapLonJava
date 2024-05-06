@@ -8,32 +8,41 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.dialog.NewGameDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
+import view.panel.SinglePlayerOptionsPanel;
 
 public class NewGameDialog extends JPanel {
-    private final int width = 439;
-    private final int height = 302;
-    private JButton exit;
-    private JButton ok;
+
+    public static final int WIDTH = 439;
+    public static final int HEIGHT = 302;
+
+    private NewGameDialogController newGameDialogController;
+
+    private SinglePlayerOptionsPanel singlePlayerOptionsPanel;
+
+    private JButton btnExit;
+    private JButton btnOK;
     private JTextField editName;
     private JLabel alertLabel;
 
-    public NewGameDialog() {
+    public NewGameDialog(SinglePlayerOptionsPanel singlePlayerOptionsPanel) {
+        newGameDialogController = new NewGameDialogController(this);
         setLayout(null);
-        setPreferredSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.singlePlayerOptionsPanel = singlePlayerOptionsPanel;
+        initComponents();
+        setOpaque(false);
+        setVisible(false);
+    }
 
-        Image imageExit1 = new ImageIcon(ImagePaths.GAME_EXIT_1).getImage();
-        Image imageExit2 = new ImageIcon(ImagePaths.GAME_EXIT_2).getImage();
-        Image imageOK1 = new ImageIcon(ImagePaths.GAME_OK_1).getImage();
-        Image imageOK2 = new ImageIcon(ImagePaths.GAME_OK_2).getImage();
-
+    public void initComponents() {
         editName = new JTextField();
         editName.setFont(Untils.getFont(18));
         editName.setBounds(65, 143, 260, 40);
@@ -49,42 +58,42 @@ public class NewGameDialog extends JPanel {
         alertLabel.setVisible(false);
         add(alertLabel);
 
-        exit = new JButton(new ImageIcon(imageExit1));
-        exit.setRolloverIcon(new ImageIcon(imageExit2));
-        exit.setBorderPainted(false);
-        exit.setContentAreaFilled(false);
-        exit.setFocusPainted(false);
-        exit.setBounds(389, 15, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
-        add(exit);
+        btnExit = Untils.getButton(ImagePaths.GAME_EXIT_1, ImagePaths.GAME_EXIT_2);
+        btnExit.setBounds(389, 15, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        btnExit.setActionCommand("Exit");
+        btnExit.addActionListener(newGameDialogController);
+        add(btnExit);
 
-        ok = new JButton(new ImageIcon(imageOK1));
-        ok.setRolloverIcon(new ImageIcon(imageOK2));
-        ok.setBorderPainted(false);
-        ok.setContentAreaFilled(false);
-        ok.setFocusPainted(false);
-        ok.setBounds(194, 240, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
-        add(ok);
-
-        setVisible(false);
+        btnOK = Untils.getButton(ImagePaths.GAME_OK_1, ImagePaths.GAME_OK_2);
+        btnOK.setBounds(194, 240, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        btnOK.setActionCommand("OK");
+        btnOK.addActionListener(newGameDialogController);
+        add(btnOK);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image imageAboutDialog = new ImageIcon(ImagePaths.DIALOG_NEWGAME).getImage();
-        g.drawImage(imageAboutDialog, 0, 0, width, 277, this);
+        g.drawImage(imageAboutDialog, 0, 0, WIDTH, 277, this);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 800);
-        frame.getContentPane().setLayout(null);
-        NewGameDialog newGameDialog = new NewGameDialog();
-        newGameDialog.setBounds(330, 200, newGameDialog.width, newGameDialog.height);
-        newGameDialog.setVisible(true);
-        frame.add(newGameDialog);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    public void showAlertLabel() {
+        alertLabel.setVisible(true);
     }
+
+    public void open() {
+        editName.setText("");
+        alertLabel.setVisible(false);
+        setVisible(true);
+    }
+
+    public void close() {
+        setVisible(false);
+    }
+
+    public SinglePlayerOptionsPanel getSinglePlayerOptionsPanel() {
+        return singlePlayerOptionsPanel;
+    }
+    
 }

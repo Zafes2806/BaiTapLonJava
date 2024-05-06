@@ -1,0 +1,22 @@
+package controller.dialog;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import view.dialog.AboutDialog;
+
+public class AboutDialogController  implements ActionListener{
+
+    private AboutDialog aboutDialog;
+
+    public AboutDialogController(AboutDialog dialog) {
+        this.aboutDialog = dialog;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {  
+        if (e.getActionCommand().equals("Exit"))
+            aboutDialog.getMenuPanel().closeAboutDialog();
+    }
+    
+}

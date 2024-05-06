@@ -3,42 +3,36 @@ package view.dialog;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.dialog.AboutDialogController;
 import untils.Constant;
 import untils.ImagePaths;
+import untils.Untils;
+import view.panel.MenuPanel;
 
 public class AboutDialog extends JPanel {
     public static final int WIDTH = 627;
     public static final int HEIGHT = 385;
-    private JButton exit;
+    private AboutDialogController aboutDialogController;
+    private MenuPanel menuPanel;
+    private JButton btnExit;
 
-    public AboutDialog() {
+    public AboutDialog(MenuPanel menuPanel) {
+        this.menuPanel = menuPanel;
         setLayout(null);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        Image imageExit1 = new ImageIcon(ImagePaths.GAME_EXIT_1).getImage();
-        Image imageExit2 = new ImageIcon(ImagePaths.GAME_EXIT_2).getImage();
-        exit = new JButton(new ImageIcon(imageExit1));
-        exit.setRolloverIcon(new ImageIcon(imageExit2));
-        exit.setBorderPainted(false);
-        exit.setContentAreaFilled(false);
-        exit.setFocusPainted(false);
-        exit.setBounds(570, 15, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                close();
-            }
-        });
-        add(exit);
+        aboutDialogController = new AboutDialogController(this);
 
+        btnExit = Untils.getButton(ImagePaths.GAME_EXIT_1, ImagePaths.GAME_EXIT_2);
+        btnExit.setBounds(570, 15, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        btnExit.setActionCommand("Exit");
+        btnExit.addActionListener(aboutDialogController);
+        add(btnExit);
         setOpaque(false);
         setVisible(false);
     }
@@ -58,16 +52,7 @@ public class AboutDialog extends JPanel {
         setVisible(false);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 800);
-        frame.getContentPane().setLayout(null);
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.setBounds(225, 200, AboutDialog.WIDTH, AboutDialog.HEIGHT);
-        aboutDialog.setVisible(true);
-        frame.add(aboutDialog);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    public MenuPanel getMenuPanel() {
+        return menuPanel;
     }
 }

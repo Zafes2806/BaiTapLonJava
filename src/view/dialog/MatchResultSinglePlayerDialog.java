@@ -20,20 +20,13 @@ public class MatchResultSinglePlayerDialog extends JPanel {
     private final int height = 385;
     private JLabel infoPlayer;
     private JLabel matchReSult;
-    private JButton buttonHome;
-    private JButton buttonPlayAgain;
-    private JButton buttonRank;
+    private JButton btnHome;
+    private JButton btnPlayAgain;
+    private JButton btnRank;
 
     public MatchResultSinglePlayerDialog(String name, int score) {
         setLayout(null);
         setPreferredSize(new Dimension(width, height));
-
-        Image imageHome1 = new ImageIcon(ImagePaths.GAME_HOME_1).getImage();
-        Image imageHome2 = new ImageIcon(ImagePaths.GAME_HOME_2).getImage();
-        Image imagePlayAgain1 = new ImageIcon(ImagePaths.GAME_PLAY_AGAIN_1).getImage();
-        Image imagePlayAgain2 = new ImageIcon(ImagePaths.GAME_PLAY_AGAIN_2).getImage();
-        Image imageRank1 = new ImageIcon(ImagePaths.GAME_RANK_1).getImage();
-        Image imageRank2 = new ImageIcon(ImagePaths.GAME_RANK_2).getImage();
 
         Font maintree_20 = Untils.getFont(20);
         infoPlayer = new JLabel("Player's name: " + name, JLabel.CENTER);
@@ -47,29 +40,17 @@ public class MatchResultSinglePlayerDialog extends JPanel {
         add(matchReSult);
         setVisible(false);
 
-        buttonHome = new JButton(new ImageIcon(imageHome1));
-        buttonHome.setRolloverIcon(new ImageIcon(imageHome2));
-        buttonHome.setBounds(231, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
-        buttonHome.setBorderPainted(false);
-        buttonHome.setContentAreaFilled(false);
-        buttonHome.setFocusPainted(false);
-        add(buttonHome);
+        btnHome = Untils.getButton(ImagePaths.GAME_HOME_1, ImagePaths.GAME_HOME_2);
+        btnHome.setBounds(231, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
+        add(btnHome);
 
-        buttonPlayAgain = new JButton(new ImageIcon(imagePlayAgain1));
-        buttonPlayAgain.setRolloverIcon(new ImageIcon(imagePlayAgain2));
-        buttonPlayAgain.setBounds(291, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
-        buttonPlayAgain.setBorderPainted(false);
-        buttonPlayAgain.setContentAreaFilled(false);
-        buttonPlayAgain.setFocusPainted(false);
-        add(buttonPlayAgain);
+        btnPlayAgain = Untils.getButton(ImagePaths.GAME_PLAY_AGAIN_1, ImagePaths.GAME_PLAY_AGAIN_2);
+        btnPlayAgain.setBounds(291, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
+        add(btnPlayAgain);
 
-        buttonRank = new JButton(new ImageIcon(imageRank1));
-        buttonRank.setRolloverIcon(new ImageIcon(imageRank2));
-        buttonRank.setBounds(351, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
-        buttonRank.setBorderPainted(false);
-        buttonRank.setContentAreaFilled(false);
-        buttonRank.setFocusPainted(false);
-        add(buttonRank);
+        btnRank = Untils.getButton(ImagePaths.GAME_RANK_1, ImagePaths.GAME_RANK_2);
+        btnRank.setBounds(351, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
+        add(btnRank);
     }
 
     @Override
