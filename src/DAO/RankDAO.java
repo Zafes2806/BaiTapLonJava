@@ -1,7 +1,7 @@
 package DAO;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
@@ -30,17 +30,13 @@ public class RankDAO {
     public static List<Player> getRank() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        List<Player> players = new ArrayList<>();
+        List<Player> players = new LinkedList<>();
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://" + DB_SEVER_NAME + ":1433;" 
-                         + "databaseName=" + DB_DATABASE_NAME + ";" 
-                         + "encrypt = true; trustServerCertificate = true";
+            connection = getConnection();
 
-            connection = DriverManager.getConnection(url, DB_USER_NAME, DB_PASSWORD);
-            String sql = "select playerName, playerScore "
-                       + "from PlayerRank "
-                       + "order by playerScore desc, playDate desc";
+            String sql = "select playerName, playerScore " + "from PlayerRank "
+                    + "order by playerScore desc, playDate desc";
+
             preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -51,19 +47,13 @@ public class RankDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                try {
+            try {
+                if (preparedStatement != null)
                     preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
+                if (connection != null)
                     connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         return players;
@@ -79,12 +69,8 @@ public class RankDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://" + DB_SEVER_NAME + ":1433;" 
-                       + "databaseName=" + DB_DATABASE_NAME + ";" 
-                       + "encrypt = true; trustServerCertificate = true";
+            connection = getConnection();
 
-            connection = DriverManager.getConnection(url, DB_USER_NAME, DB_PASSWORD);
             String sql = "insert into PlayerRank Values(?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, ID);
@@ -120,17 +106,10 @@ public class RankDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://" + DB_SEVER_NAME + ":1433;" 
-                         + "databaseName=" + DB_DATABASE_NAME + ";" 
-                         + "encrypt = true; trustServerCertificate = true";
+            connection = getConnection();
 
-            connection = DriverManager.getConnection(url, DB_USER_NAME, DB_PASSWORD);
-            String sql = "delete from PlayerRank where playerID not in ( "
-                            + "select top 5 playerId " +
-                              "from PlayerRank "+
-                              "order by playerScore desc, playDate desc"
-                       + ")";
+            String sql = "delete from PlayerRank where playerID not in ( " + "select top 5 playerId "
+                    + "from PlayerRank " + "order by playerScore desc, playDate desc" + ")";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -151,6 +130,20 @@ public class RankDAO {
                 }
             }
         }
+    }
+
+    private static Connection getConnection() {
+        Connection connection = null;
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url = "jdbc:sqlserver://" + DB_SEVER_NAME + ":1433;" + "databaseName=" + DB_DATABASE_NAME + ";"
+                    + "encrypt = true; trustServerCertificate = true";
+
+            connection = DriverManager.getConnection(url, DB_USER_NAME, DB_PASSWORD);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 
     private static int getPlayerIDFromFile() {

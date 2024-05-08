@@ -35,6 +35,7 @@ public class TwoPlayerRulesDialog extends JPanel {
         btnOK.addActionListener(twoPlayerRulesDialogController);
         add(btnOK);
 
+        setOpaque(false);
         setVisible(false);
     }
 
@@ -48,6 +49,7 @@ public class TwoPlayerRulesDialog extends JPanel {
     public void open() {
         setVisible(true);
     }
+
     public void close() {
         setVisible(false);
     }
@@ -55,7 +57,5 @@ public class TwoPlayerRulesDialog extends JPanel {
     public TwoPlayerPanel getTwoPlayerPanel() {
         return twoPlayerPanel;
     }
-
-   
 
 }

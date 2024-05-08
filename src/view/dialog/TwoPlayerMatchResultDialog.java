@@ -10,24 +10,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.dialog.TwoPlayerMatchResultDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
 import view.panel.TwoPlayerPanel;
 
-public class MatchResultTwoPlayerDialog extends JPanel {
+public class TwoPlayerMatchResultDialog extends JPanel {
     public static final int WIDTH = 627;
     public static final int HEIGHT = 385;
 
     private TwoPlayerPanel twoPlayerPanel;
+    private TwoPlayerMatchResultDialogController matchResultTwoPlayerDialogController;
 
     private JLabel matchScore;
     private JLabel matchReSult;
-    private JButton buttonHome;
-    private JButton buttonPlayAgain;
+    private JButton btnHome;
+    private JButton btnPlayAgain;
 
-    public MatchResultTwoPlayerDialog(TwoPlayerPanel twoPlayerPanel) {
+    public TwoPlayerMatchResultDialog(TwoPlayerPanel twoPlayerPanel) {
         this.twoPlayerPanel = twoPlayerPanel;
+        matchResultTwoPlayerDialogController = new TwoPlayerMatchResultDialogController(this);
         setLayout(null);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         initComponent();
@@ -48,13 +51,17 @@ public class MatchResultTwoPlayerDialog extends JPanel {
         matchReSult.setBounds(30, 170, 567, 30);
         add(matchReSult);
 
-        buttonHome = Untils.getButton(ImagePaths.GAME_HOME_1,ImagePaths.GAME_HOME_2);
-        buttonHome.setBounds(250, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
-        add(buttonHome);
+        btnHome = Untils.getButton(ImagePaths.GAME_HOME_1,ImagePaths.GAME_HOME_2);
+        btnHome.setBounds(250, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
+        btnHome.setActionCommand("Home");
+        btnHome.addActionListener(matchResultTwoPlayerDialogController);
+        add(btnHome);
 
-        buttonPlayAgain = Untils.getButton(ImagePaths.GAME_PLAY_AGAIN_1,ImagePaths.GAME_PLAY_AGAIN_2);
-        buttonPlayAgain.setBounds(310, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
-        add(buttonPlayAgain);
+        btnPlayAgain = Untils.getButton(ImagePaths.GAME_PLAY_AGAIN_1,ImagePaths.GAME_PLAY_AGAIN_2);
+        btnPlayAgain.setBounds(310, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
+        btnPlayAgain.setActionCommand("Play again");
+        btnPlayAgain.addActionListener(matchResultTwoPlayerDialogController);
+        add(btnPlayAgain);
     }
 
     @Override
@@ -73,9 +80,14 @@ public class MatchResultTwoPlayerDialog extends JPanel {
         setVisible(false);
     }
 
+    public TwoPlayerPanel getTwoPlayerPanel() {
+        return twoPlayerPanel;
+    }
+
+
     private void update() {
-        int player1Score = twoPlayerPanel.getModeTwoPlayer().getPlayer1Score();
-        int player2Score = twoPlayerPanel.getModeTwoPlayer().getPlayer2Score();
+        int player1Score = twoPlayerPanel.getTwoPlayerDialog().getPlayer1Score();
+        int player2Score = twoPlayerPanel.getTwoPlayerDialog().getPlayer2Score();
 
         String score = "Match score : " + player1Score + " - " + player2Score;
         matchScore.setText(score);

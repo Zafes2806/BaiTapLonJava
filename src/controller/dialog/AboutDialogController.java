@@ -3,9 +3,10 @@ package controller.dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import untils.Sounds;
 import view.dialog.AboutDialog;
 
-public class AboutDialogController  implements ActionListener{
+public class AboutDialogController implements ActionListener{
 
     private AboutDialog aboutDialog;
 
@@ -14,9 +15,13 @@ public class AboutDialogController  implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {  
-        if (e.getActionCommand().equals("Exit"))
+    public void actionPerformed(ActionEvent e) {
+        if (aboutDialog.getMenuPanel().getGameScreen().isSound())
+            Sounds.clickButtonSound();
+        if (e.getActionCommand().equals("Exit")) {
             aboutDialog.getMenuPanel().closeAboutDialog();
+            aboutDialog.getMenuPanel().openMenuDialog();
+        }
     }
-    
+
 }

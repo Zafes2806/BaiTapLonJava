@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 
 public class ToolDice extends JPanel {
 	private Tool[] tools = new Tool[6];
+	public Tool[] getTools() {
+		return tools;
+	}
+
 	private final int toolDiceWidth = 168;
 	private final int toolDiceHeight = 224;
 
@@ -38,6 +42,73 @@ public class ToolDice extends JPanel {
 		tools[4].setBounds(0, 56, 54, 54);
 		add(tools[4]);
 
+		tools[5] = new Paper();
+		tools[5].setBounds(112, 56, 54, 54);
+		add(tools[5]);
+	}
+
+	public ToolDice(int a[]) {
+		setLayout(null);
+		setPreferredSize(new Dimension(toolDiceWidth, toolDiceHeight));
+		setSize(new Dimension(toolDiceWidth, toolDiceHeight));
+
+		if (a[0] == 0)
+			tools[0] = new Rock();
+		else if (a[0] == 1)
+			tools[0] = new Scissors();
+		else
+			tools[0] = new Paper();
+		tools[0].setBounds(56, 0, 50, 50);
+		add(tools[0]);
+
+		if (a[1] == 0)
+			tools[1] = new Rock();
+		else if (a[1] == 1)
+			tools[1] = new Scissors();
+		else
+			tools[1] = new Paper();
+		tools[1] = new Scissors();
+		tools[1].setBounds(56, 56, 50, 50);
+		tools[1].setBackground(Color.red);
+		tools[1].setOpaque(true);
+		add(tools[1]);
+
+		if (a[2] == 0)
+			tools[2] = new Rock();
+		else if (a[2] == 1)
+			tools[2] = new Scissors();
+		else
+			tools[2] = new Paper();
+		tools[2] = new Paper();
+		tools[2].setBounds(56, 112, 50, 50);
+		add(tools[2]);
+
+		if (a[3] == 0)
+			tools[3] = new Rock();
+		else if (a[3] == 1)
+			tools[3] = new Scissors();
+		else
+			tools[3] = new Paper();
+		tools[3] = new Rock();
+		tools[3].setBounds(56, 168, 50, 50);
+		add(tools[3]);
+
+		if (a[4] == 0)
+			tools[4] = new Rock();
+		else if (a[4] == 1)
+			tools[4] = new Scissors();
+		else
+			tools[4] = new Paper();
+		tools[4] = new Scissors();
+		tools[4].setBounds(0, 56, 54, 54);
+		add(tools[4]);
+
+		if (a[5] == 0)
+			tools[5] = new Rock();
+		else if (a[5] == 1)
+			tools[5] = new Scissors();
+		else
+			tools[5] = new Paper();
 		tools[5] = new Paper();
 		tools[5].setBounds(112, 56, 54, 54);
 		add(tools[5]);

@@ -21,12 +21,11 @@ public class SettingsDialog extends JPanel {
     private SettingsDialogController settingsDialogController;
 
     private MenuPanel menuPanel;
-    private JButton btnMucsicOFF;
+    private JButton btnMusicOFF;
     private JButton btnMusicON;
     private JButton btnSoundOFF;
     private JButton btnSoundON;
     private JButton btnExit;
-    private boolean music;
     private boolean sound;
 
 
@@ -41,11 +40,11 @@ public class SettingsDialog extends JPanel {
     }
 
     public void initComponents() {
-        btnMucsicOFF = Untils.getButton(ImagePaths.MENU_OFF_1, ImagePaths.MENU_OFF_2);
-        btnMucsicOFF.setBounds(250, 78, 69, 27);
-        btnMucsicOFF.setActionCommand("Music OFF");
-        btnMucsicOFF.addActionListener(settingsDialogController);
-        add(btnMucsicOFF);
+        btnMusicOFF = Untils.getButton(ImagePaths.MENU_OFF_1, ImagePaths.MENU_OFF_2);
+        btnMusicOFF.setBounds(250, 78, 69, 27);
+        btnMusicOFF.setActionCommand("Music OFF");
+        btnMusicOFF.addActionListener(settingsDialogController);
+        add(btnMusicOFF);
 
         btnMusicON = Untils.getButton(ImagePaths.MENU_ON_1, ImagePaths.MENU_ON_2);
         btnMusicON.setBounds(250, 78, 69, 27);
@@ -82,13 +81,11 @@ public class SettingsDialog extends JPanel {
     }
 
     public void offMusic() {
-        music = false;
-        btnMucsicOFF.setVisible(false);
+        btnMusicOFF.setVisible(false);
         btnMusicON.setVisible(true);
     }
     public void onMusic() {
-        music = true;
-        btnMucsicOFF.setVisible(true);
+        btnMusicOFF.setVisible(true);
         btnMusicON.setVisible(false);
     }
 
@@ -107,14 +104,6 @@ public class SettingsDialog extends JPanel {
         return menuPanel;
     }
 
-    public boolean isMusic() {
-        return music;
-    }
-
-    public void setMusic(boolean music) {
-        this.music = music;
-    }
-
     public boolean isSound() {
         return sound;
     }
@@ -124,6 +113,20 @@ public class SettingsDialog extends JPanel {
     }
 
     public void open() {
+        if (getMenuPanel().getGameScreen().isMusic()) {
+            btnMusicOFF.setVisible(true);
+            btnMusicON.setVisible(false);
+        } else {
+            btnMusicON.setVisible(true);
+            btnMusicOFF.setVisible(false);
+        }
+        if (getMenuPanel().getGameScreen().isSound()) {
+            btnSoundOFF.setVisible(true);
+            btnSoundON.setVisible(false);
+        } else {
+            btnSoundON.setVisible(true);
+            btnSoundOFF.setVisible(false);
+        }
         setVisible(true);
     }
     public void close() {

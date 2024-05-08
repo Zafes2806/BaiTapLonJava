@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import untils.ImagePaths;
 
 public class Rock extends Tool {
-
     public Rock() {
         Image image = new ImageIcon(ImagePaths.ROCK).getImage();
         this.setIcon(new ImageIcon(image));
@@ -15,10 +14,9 @@ public class Rock extends Tool {
 
     @Override
     public int compareTo(Tool o) {
-        Paper paper = new Paper();
-        if (o.getClass().equals(this.getClass()))
+        if (o instanceof Rock)
             return 0;
-        if (o.getClass().equals(paper.getClass()))
+        if (o instanceof Paper)
             return -1;
         return 1;
     }

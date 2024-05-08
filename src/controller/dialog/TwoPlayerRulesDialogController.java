@@ -3,9 +3,11 @@ package controller.dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import untils.Sounds;
 import view.dialog.TwoPlayerRulesDialog;
+import view.panel.TwoPlayerPanel;
 
-public class TwoPlayerRulesDialogController implements ActionListener {
+public class TwoPlayerRulesDialogController implements ActionListener{
 
     private TwoPlayerRulesDialog twoPlayerRulesDialog;
 
@@ -14,13 +16,17 @@ public class TwoPlayerRulesDialogController implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { 
+    public void actionPerformed(ActionEvent e) {
+        TwoPlayerPanel twoPlayerPanel = twoPlayerRulesDialog.getTwoPlayerPanel();
+        if (twoPlayerPanel.getGameScreen().isSound())
+            Sounds.clickButtonSound();
         if (e.getActionCommand().equals("OK")) {
-            twoPlayerRulesDialog.getTwoPlayerPanel().closeTwoPlayerRulesDialog();
-            twoPlayerRulesDialog.getTwoPlayerPanel().openModeTwoPlayer();
-            twoPlayerRulesDialog.getTwoPlayerPanel().getModeTwoPlayer().requestFocus();
-
+            twoPlayerPanel.closeTwoPlayerRulesDialog();
+            if (twoPlayerPanel.getTwoPlayerDialog() == null) {
+                twoPlayerPanel.startTwoPlayer();
+            }
+            twoPlayerPanel.getTwoPlayerDialog().enable();
+            twoPlayerPanel.getTwoPlayerDialog().requestFocus();
         }
     }
-    
 }

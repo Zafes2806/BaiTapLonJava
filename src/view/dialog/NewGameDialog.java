@@ -16,27 +16,27 @@ import controller.dialog.NewGameDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
-import view.panel.SinglePlayerOptionsPanel;
+import view.panel.SinglePlayerPanel;
 
 public class NewGameDialog extends JPanel {
 
     public static final int WIDTH = 439;
     public static final int HEIGHT = 302;
+    private String playerName;
 
+    private SinglePlayerPanel singlePlayerPanel;
     private NewGameDialogController newGameDialogController;
-
-    private SinglePlayerOptionsPanel singlePlayerOptionsPanel;
 
     private JButton btnExit;
     private JButton btnOK;
     private JTextField editName;
     private JLabel alertLabel;
 
-    public NewGameDialog(SinglePlayerOptionsPanel singlePlayerOptionsPanel) {
+    public NewGameDialog(SinglePlayerPanel singlePlayerPanel) {
+        this.singlePlayerPanel = singlePlayerPanel;
         newGameDialogController = new NewGameDialogController(this);
         setLayout(null);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        this.singlePlayerOptionsPanel = singlePlayerOptionsPanel;
         initComponents();
         setOpaque(false);
         setVisible(false);
@@ -84,6 +84,7 @@ public class NewGameDialog extends JPanel {
 
     public void open() {
         editName.setText("");
+        playerName = "";
         alertLabel.setVisible(false);
         setVisible(true);
     }
@@ -92,8 +93,20 @@ public class NewGameDialog extends JPanel {
         setVisible(false);
     }
 
-    public SinglePlayerOptionsPanel getSinglePlayerOptionsPanel() {
-        return singlePlayerOptionsPanel;
+    public SinglePlayerPanel getSinglePlayerPanel() {
+        return singlePlayerPanel;
     }
-    
+
+    public JTextField getEditName() {
+        return editName;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
 }

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import untils.ImagePaths;
 import view.dialog.AboutDialog;
 import view.dialog.MenuDialog;
-import view.dialog.RankDialog;
+import view.dialog.RankDialogInMenu;
 import view.dialog.SettingsDialog;
 import view.frame.GameScreen;
 
@@ -22,9 +22,8 @@ public class MenuPanel extends JPanel {
 
     private MenuDialog menuDialog;
     private SettingsDialog settingsDialog;
-    private RankDialog rankDialog;
+    private RankDialogInMenu rankDialogInMenu;
     private AboutDialog aboutDialog;
-    private SinglePlayerOptionsPanel singlePlayerOptionsPanel;
 
     public MenuPanel(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -44,17 +43,13 @@ public class MenuPanel extends JPanel {
         settingsDialog.setBounds(358, 250, SettingsDialog.WIDTH, SettingsDialog.HEIGHT);
         this.add(settingsDialog);
 
-        rankDialog = new RankDialog(this);
-        rankDialog.setBounds(225, 200, RankDialog.WIDTH, RankDialog.HEIGHT);
-        this.add(rankDialog);
+        rankDialogInMenu = new RankDialogInMenu(this);
+        rankDialogInMenu.setBounds(225, 200, RankDialogInMenu.WIDTH, RankDialogInMenu.HEIGHT);
+        this.add(rankDialogInMenu);
 
         aboutDialog = new AboutDialog(this);
         aboutDialog.setBounds(225, 200, AboutDialog.WIDTH, AboutDialog.HEIGHT);
         this.add(aboutDialog);
-
-        singlePlayerOptionsPanel = new SinglePlayerOptionsPanel(this);
-        singlePlayerOptionsPanel.setBounds(0, 0, SinglePlayerOptionsPanel.WIDTH, SinglePlayerOptionsPanel.HEIGHT);
-        this.add(singlePlayerOptionsPanel);
 
     }
 
@@ -76,45 +71,29 @@ public class MenuPanel extends JPanel {
     public void closeMenuDialog() {
         menuDialog.close();
     }
-
     
     public void openSettingsDialog() {
-        menuDialog.close();
         settingsDialog.open();
     }
 
     public void closeSettingsDialog() {
         settingsDialog.close();
-        menuDialog.open();
     }
 
     public void openRankDialog() {
-        menuDialog.close();
-        rankDialog.open();
+        rankDialogInMenu.open();
     }
 
     public void closeRankDialog() {
-        rankDialog.close();
-        menuDialog.open();
+        rankDialogInMenu.close();
     }
 
-    
     public void openAboutDialog() {
-        menuDialog.close();
         aboutDialog.open();
     }
 
     public void closeAboutDialog() {
         aboutDialog.close();
-        menuDialog.open();
-    }
-    public void openSinglePlayerOptionsPanel() {
-        menuDialog.close();
-        singlePlayerOptionsPanel.open();
-    }
-    public void closeSinglePlayerOptionsPanel() {
-        singlePlayerOptionsPanel.close();
-        menuDialog.open();
     }
 
     public void exit() {

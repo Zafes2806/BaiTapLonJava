@@ -6,27 +6,35 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import controller.dialog.SinglePlayerRulesDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
+import view.panel.SinglePlayerPanel;
 
 public class SinglePlayerRulesDialog extends JPanel {
-    private final int width = 674;
-    private final int height = 485;
-    private JButton btnOk;
+    private SinglePlayerPanel singlePlayerPanel;
 
-    public SinglePlayerRulesDialog() {
+    public static final int WIDTH = 674;
+    public static final int HEIGHT = 485;
+    private JButton btnOK;
+    private SinglePlayerRulesDialogController singlePlayerRulesDialogController;
+
+    public SinglePlayerRulesDialog(SinglePlayerPanel singlePlayerPanel) {
+        this.singlePlayerPanel = singlePlayerPanel;
+        this.singlePlayerRulesDialogController = new SinglePlayerRulesDialogController(this); 
         setLayout(null);
-        setPreferredSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        btnOk = Untils.getButton(ImagePaths.GAME_OK_1, ImagePaths.GAME_OK_2);
-        btnOk.setBounds(312, 425, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
-        add(btnOk);
+        btnOK = Untils.getButton(ImagePaths.GAME_OK_1, ImagePaths.GAME_OK_2);
+        btnOK.setBounds(312, 425, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        btnOK.setActionCommand("OK");
+        btnOK.addActionListener(singlePlayerRulesDialogController);
+        add(btnOK);
 
+        setOpaque(false);
         setVisible(false);
     }
 
@@ -34,20 +42,18 @@ public class SinglePlayerRulesDialog extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image image = new ImageIcon(ImagePaths.DIALOG_RULES_SINGLE_PLAYER).getImage();
-        g.drawImage(image, 0, 0, width, height - 20, this);
+        g.drawImage(image, 0, 0, WIDTH, HEIGHT - 20, this);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 800);
-        JLayeredPane layeredPane = new JLayeredPane(); 
-        frame.add(layeredPane);
-        SinglePlayerRulesDialog singlePlayerRulesDialog = new SinglePlayerRulesDialog();
-        singlePlayerRulesDialog.setBounds(213, 150, singlePlayerRulesDialog.width, singlePlayerRulesDialog.height);
-        singlePlayerRulesDialog.setVisible(true);
-        layeredPane.add(singlePlayerRulesDialog, JLayeredPane.DEFAULT_LAYER);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    public void open() {
+        setVisible(true);
+    }
+
+    public void close() {
+        setVisible(false);
+    }
+
+    public SinglePlayerPanel getSinglePlayerPanel() {
+        return singlePlayerPanel;
     }
 }

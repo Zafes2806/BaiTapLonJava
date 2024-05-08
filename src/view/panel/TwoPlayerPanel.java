@@ -1,30 +1,31 @@
 package view.panel;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 
-import javax.swing.JLayeredPane;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import view.dialog.MatchResultTwoPlayerDialog;
+import untils.ImagePaths;
+import view.dialog.TwoPlayerMatchResultDialog;
+import view.dialog.TwoPlayerDialog;
 import view.dialog.TwoPlayerRulesDialog;
 import view.frame.GameScreen;
 
-public class TwoPlayerPanel extends JPanel {
+public class TwoPlayerPanel extends JPanel {    // Cửa sổ chế độ chơi 2 người
     public static final int WIDTH = 1100;
     public static final int HEIGHT = 800;
 
     private GameScreen gameScreen;
 
-    private JLayeredPane jLayeredPane;
-    private JPanel opacityPanel;
-    private ModeTwoPlayer modeTwoPlayer;
+    private TwoPlayerDialog twoPlayerDialog;
     private TwoPlayerRulesDialog twoPlayerRulesDialog;
-    private MatchResultTwoPlayerDialog matchResultTwoPlayerDialog;
+    private TwoPlayerMatchResultDialog twoPlayerMatchResultDialog;
 
     public TwoPlayerPanel(GameScreen gameScreen) {
-        setLayout(null);
         this.gameScreen = gameScreen;
+        setLayout(null);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         initComponent();
         setOpaque(false);
@@ -32,67 +33,54 @@ public class TwoPlayerPanel extends JPanel {
     }
 
     public void initComponent() {
-        jLayeredPane = new JLayeredPane();
-        jLayeredPane.setBounds(0, 0, WIDTH, HEIGHT);
-
-        opacityPanel = new JPanel();
-        opacityPanel.setBackground(new Color(0, 0, 0, 128));
-        opacityPanel.setBounds(0, 1, 1100, 800);
-        opacityPanel.setOpaque(true);
-        opacityPanel.setVisible(false);
-        
-        jLayeredPane.add(opacityPanel, JLayeredPane.PALETTE_LAYER);
-
         twoPlayerRulesDialog = new TwoPlayerRulesDialog(this);
-        twoPlayerRulesDialog.setBounds(213, 150, TwoPlayerRulesDialog.WIDTH, TwoPlayerRulesDialog.HEIGHT);
-        twoPlayerRulesDialog.setVisible(true);
-        jLayeredPane.add(twoPlayerRulesDialog, JLayeredPane.MODAL_LAYER);
+        twoPlayerRulesDialog.setBounds(213, 200, TwoPlayerRulesDialog.WIDTH, TwoPlayerRulesDialog.HEIGHT);
+        this.add(twoPlayerRulesDialog);
 
-        matchResultTwoPlayerDialog = new MatchResultTwoPlayerDialog(this);
-        matchResultTwoPlayerDialog.setBounds(225, 200, MatchResultTwoPlayerDialog.WIDTH,
-                MatchResultTwoPlayerDialog.HEIGHT);
-        jLayeredPane.add(matchResultTwoPlayerDialog, JLayeredPane.MODAL_LAYER);
-
-        add(jLayeredPane);
+        twoPlayerMatchResultDialog = new TwoPlayerMatchResultDialog(this);
+        twoPlayerMatchResultDialog.setBounds(225, 200, TwoPlayerMatchResultDialog.WIDTH,
+                TwoPlayerMatchResultDialog.HEIGHT);
+        this.add(twoPlayerMatchResultDialog);
     }
 
-    public void openModeTwoPlayer() {
-        if (modeTwoPlayer == null) {
-            modeTwoPlayer = new ModeTwoPlayer(this);
-            modeTwoPlayer.setBounds(0, 0, ModeTwoPlayer.WIDTH, ModeTwoPlayer.HEIGHT);
-            jLayeredPane.add(modeTwoPlayer, JLayeredPane.DEFAULT_LAYER);
-        }
-        modeTwoPlayer.open();
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Image image = new ImageIcon(ImagePaths.BACKGROUND_TWO_PLAYER_PANEL).getImage();
+        g.drawImage(image, 0, 0, this);
     }
 
-    public void closeModeTwoPlayer() {
-        jLayeredPane.remove(modeTwoPlayer);
-        revalidate();
-        repaint();
+    public void startTwoPlayer() {
+        twoPlayerDialog = new TwoPlayerDialog(this);
+        twoPlayerDialog.setBounds(0, 0, TwoPlayerDialog.WIDTH, TwoPlayerDialog.HEIGHT);
+        this.add(twoPlayerDialog);
+        twoPlayerDialog.open();
+        twoPlayerDialog.requestFocus();
+        twoPlayerDialog.start();
     }
 
     public void openTwoPlayerRulesDialog() {
-        opacityPanel.setVisible(true);
         twoPlayerRulesDialog.setVisible(true);
     }
 
     public void closeTwoPlayerRulesDialog() {
-        opacityPanel.setVisible(false);
         twoPlayerRulesDialog.setVisible(false);
     }
 
-    public void openResultTwoPlayerDialog() {
-        opacityPanel.setVisible(true);
-        matchResultTwoPlayerDialog.open();
+    public void openTwoPlayerMatchResultDialog() {
+        twoPlayerMatchResultDialog.open();
     }
 
-    public void closeResultTwoPlayerDialog() {
-        opacityPanel.setVisible(false);
-        matchResultTwoPlayerDialog.close();
+    public void closeTwoPlayerMatchResultDialog() {
+        twoPlayerMatchResultDialog.close();
     }
 
-    public ModeTwoPlayer getModeTwoPlayer() {
-        return modeTwoPlayer;
+    public TwoPlayerDialog getTwoPlayerDialog() {
+        return twoPlayerDialog;
+    }
+
+    public void setTwoPlayerDialog(TwoPlayerDialog twoPlayerDialog) {
+        this.twoPlayerDialog = twoPlayerDialog;
     }
 
     public GameScreen getGameScreen() {
@@ -100,6 +88,7 @@ public class TwoPlayerPanel extends JPanel {
     }
 
     public void open() {
+        openTwoPlayerRulesDialog();
         setVisible(true);
     }
 

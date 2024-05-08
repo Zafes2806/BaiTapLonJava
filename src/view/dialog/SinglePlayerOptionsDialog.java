@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import controller.dialog.SinglePlayerOptionsDialogController;
 import untils.ImagePaths;
 import untils.Untils;
-import view.panel.SinglePlayerOptionsPanel;
+import view.panel.SinglePlayerPanel;
 
 public class SinglePlayerOptionsDialog extends JPanel {
     public static final int WIDTH = 217;
@@ -17,15 +17,16 @@ public class SinglePlayerOptionsDialog extends JPanel {
 
     private SinglePlayerOptionsDialogController singlePlayerOptionsDialogController;
 
-    private SinglePlayerOptionsPanel singlePlayerOptionsPanel;
+    private SinglePlayerPanel SinglePlayerPanel;
 
     private JButton btnContinue;
     private JButton btnNewGame;
     private JButton btnBack;
 
-    public SinglePlayerOptionsDialog(SinglePlayerOptionsPanel singlePlayerOptionsPanel) {
+    public SinglePlayerOptionsDialog(SinglePlayerPanel singlePlayerPanel) {
+        this.SinglePlayerPanel = singlePlayerPanel;
         singlePlayerOptionsDialogController = new SinglePlayerOptionsDialogController(this); 
-        this.singlePlayerOptionsPanel = singlePlayerOptionsPanel;
+        
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setLayout(new GridLayout(3, 1, 19, 0));
         initComponents();
@@ -58,8 +59,8 @@ public class SinglePlayerOptionsDialog extends JPanel {
         setVisible(false);
     }
 
-    public SinglePlayerOptionsPanel getSinglePlayerOptionsPanel() {
-        return singlePlayerOptionsPanel;
+    public SinglePlayerPanel getSinglePlayerPanel() {
+        return SinglePlayerPanel;
     }
 
 }

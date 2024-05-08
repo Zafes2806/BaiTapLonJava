@@ -8,12 +8,23 @@ import javax.swing.JPanel;
 
 public class ToolBoard extends JPanel {
 	private Tool[][] tools;
+	public Tool[][] getTools() {
+		return tools;
+	}
+
 	private final int boardSize = 9;
 	private final int boardWidth = 502;
 	private final int boardHeight = 502;
 	private int choiceX = boardSize / 2;
+	public int getChoiceX() {
+		return choiceX;
+	}
+
 	private int choiceY = boardSize / 2;
 
+	public int getChoiceY() {
+		return choiceY;
+	}
 	public ToolBoard() {
 		setLayout(new GridLayout(boardSize, boardSize));
 		setPreferredSize(new Dimension(boardHeight, boardWidth));
@@ -36,6 +47,26 @@ public class ToolBoard extends JPanel {
 				this.add(tools[i][j]);
 			}
 		}
+		tools[choiceX][choiceY].setBackground(Color.green);
+		tools[choiceX][choiceY].setOpaque(true);
+	}
+	public ToolBoard(int a[][], int x, int y) {
+		setLayout(new GridLayout(boardSize, boardSize));
+		setPreferredSize(new Dimension(boardHeight, boardWidth));
+		tools = new Tool[boardSize][boardSize];
+		for (int i = 0; i < boardSize; i++) {
+			for (int j = 0; j < boardSize; j++) {
+				if (a[i][j] == 0)
+					tools[i][j] = new Rock();
+				else if (a[i][j] == 1)
+					tools[i][j] = new Scissors();
+				else
+					tools[i][j] = new Paper();
+				this.add(tools[i][j]);
+			}
+		}
+		choiceX = x;
+		choiceY = y;
 		tools[choiceX][choiceY].setBackground(Color.green);
 		tools[choiceX][choiceY].setOpaque(true);
 	}
