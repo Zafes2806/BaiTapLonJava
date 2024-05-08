@@ -64,7 +64,7 @@ public class ImagePaths {
     public static final String MENU_OFF_2 = "resource/image/menu_button/MenuOFF2.png";
 
     public static final String BACKGROUND_MENU_PANEL = "resource/image/panel_background/BackgroundMenuPanel.png";
-    public static final String BACKGROUND_SINGLE_PLAYER_ = "resource/image/panel_background/BackgroundSingerPlayer.png";
+    public static final String BACKGROUND_SINGLE_PLAYER = "resource/image/panel_background/BackgroundSinglePlayer.png";
     public static final String BACKGROUND_SINGLE_PLAYER_PANEL = "resource/image/panel_background/BackgroundSinglePlayerPanel.png";
     public static final String BACKGROUND_TWO_PLAYER = "resource/image/panel_background/BackgroundTwoPlayer.png";
     public static final String BACKGROUND_TWO_PLAYER_PANEL = "resource/image/panel_background/BackgroundTwoPlayerPanel.png";

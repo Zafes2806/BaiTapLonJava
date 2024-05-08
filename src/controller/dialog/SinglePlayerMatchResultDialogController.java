@@ -3,7 +3,7 @@ package controller.dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import untils.Sounds;
+import sound.Sounds;
 import view.dialog.SinglePlayerDialog;
 import view.dialog.SinglePlayerMatchResultDialog;
 import view.panel.SinglePlayerPanel;
@@ -29,7 +29,7 @@ public class SinglePlayerMatchResultDialogController implements ActionListener{
             singlePlayerDialog.close();
             singlePlayerPanel.close();
             singlePlayerPanel.remove(singlePlayerPanel.getSinglePlayerDialog());
-            // singlePlayerPanel.setSinglePlayerDialog(null);
+            singlePlayerPanel.setSinglePlayerDialog(null);
             singlePlayerPanel.getGameScreen().openMenuPanel();
             break;
 
@@ -39,10 +39,9 @@ public class SinglePlayerMatchResultDialogController implements ActionListener{
             singlePlayerDialog.enable();
             singlePlayerDialog.requestFocus();
             break;
-
         case "Rank":
             singlePlayerPanel.closeSinglePlayerMatchResultDialog();
-            singlePlayerPanel.getGameScreen().getMenuPanel().openRankDialog();
+            singlePlayerPanel.openRankDialog();
             break;
         default:
             break;

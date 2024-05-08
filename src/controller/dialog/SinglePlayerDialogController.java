@@ -5,12 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
+import DAO.RankDAO;
 import DAO.SinglePlayerDao;
-import untils.Sounds;
+import model.Player;
+import sound.Sounds;
 import view.dialog.SinglePlayerDialog;
 
-public class SinglePlayerDialogController implements KeyListener, ActionListener{
+public class SinglePlayerDialogController implements KeyListener, ActionListener {
     private SinglePlayerDialog singlePlayerDialog;
 
     public SinglePlayerDialogController(SinglePlayerDialog singlePlayerDialog) {
@@ -32,48 +33,48 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
                 && e.getKeyCode() != KeyEvent.VK_S)
             return;
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_A:
-                if (singlePlayerDialog.getToolBoard().isValidMove(0, -1)) {
-                    if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
-                        Sounds.moveSound();
-                    singlePlayerDialog.getToolDice().moveLeft();
-                    singlePlayerDialog.getToolBoard().moveLeft();
-                    singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
-                }
-                break;
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_D:
-                if (singlePlayerDialog.getToolBoard().isValidMove(0, 1)) {
-                    if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
-                        Sounds.moveSound();
-                    singlePlayerDialog.getToolDice().moveRight();
-                    singlePlayerDialog.getToolBoard().moveRight();
-                    singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
-                }
-                break;
-            case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
-                if (singlePlayerDialog.getToolBoard().isValidMove(-1, 0)) {
-                    if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
-                        Sounds.moveSound();
-                    singlePlayerDialog.getToolDice().moveUp();
-                    singlePlayerDialog.getToolBoard().moveUp();
-                    singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
-                }
-                break;
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_S:
-                if (singlePlayerDialog.getToolBoard().isValidMove(1, 0)) {
-                    if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
-                        Sounds.moveSound();
-                    singlePlayerDialog.getToolDice().moveDown();
-                    singlePlayerDialog.getToolBoard().moveDown();
-                    singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
-                }
-                break;
-            default:
-                break;
+        case KeyEvent.VK_LEFT:
+        case KeyEvent.VK_A:
+            if (singlePlayerDialog.getToolBoard().isValidMove(0, -1)) {
+                if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
+                    Sounds.moveSound();
+                singlePlayerDialog.getToolDice().moveLeft();
+                singlePlayerDialog.getToolBoard().moveLeft();
+                singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
+            }
+            break;
+        case KeyEvent.VK_RIGHT:
+        case KeyEvent.VK_D:
+            if (singlePlayerDialog.getToolBoard().isValidMove(0, 1)) {
+                if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
+                    Sounds.moveSound();
+                singlePlayerDialog.getToolDice().moveRight();
+                singlePlayerDialog.getToolBoard().moveRight();
+                singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
+            }
+            break;
+        case KeyEvent.VK_W:
+        case KeyEvent.VK_UP:
+            if (singlePlayerDialog.getToolBoard().isValidMove(-1, 0)) {
+                if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
+                    Sounds.moveSound();
+                singlePlayerDialog.getToolDice().moveUp();
+                singlePlayerDialog.getToolBoard().moveUp();
+                singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
+            }
+            break;
+        case KeyEvent.VK_DOWN:
+        case KeyEvent.VK_S:
+            if (singlePlayerDialog.getToolBoard().isValidMove(1, 0)) {
+                if (singlePlayerDialog.getSinglePlayerPanel().getGameScreen().isSound())
+                    Sounds.moveSound();
+                singlePlayerDialog.getToolDice().moveDown();
+                singlePlayerDialog.getToolBoard().moveDown();
+                singlePlayerDialog.setRemainingMoves(singlePlayerDialog.getRemainingMoves() - 1);
+            }
+            break;
+        default:
+            break;
         }
         if (singlePlayerDialog.getRemainingMoves() > 0) {
             singlePlayerDialog.updateRemainingMoves();
@@ -83,6 +84,10 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
         singlePlayerDialog.updateRemainingMoves();
         if (!singlePlayerDialog.checkWinningMove()) {
             singlePlayerDialog.disable();
+            String playerName = singlePlayerDialog.getPlayerName();
+            int playerScore = singlePlayerDialog.getPlayerScore();
+            RankDAO.addPlayer(new Player(playerName, playerScore));
+            RankDAO.updateRank();
             singlePlayerDialog.getSinglePlayerPanel().openSinglePlayerMatchResultDialog();
             return;
         }
@@ -90,7 +95,7 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
         singlePlayerDialog.updateTimeLabel();
         singlePlayerDialog.setRemainingMoves(SinglePlayerDialog.NUM_MOVES);
         singlePlayerDialog.updateRemainingMoves();
-       
+
     }
 
     @Override
@@ -103,48 +108,49 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
             Sounds.clickButtonSound();
 
         switch (e.getActionCommand()) {
-            case "Home":
-                singlePlayerDialog.close();
-                singlePlayerDialog.getSinglePlayerPanel().close();
-                singlePlayerDialog.getSinglePlayerPanel().remove(singlePlayerDialog);
-                singlePlayerDialog.getSinglePlayerPanel().setSinglePlayerDialog(null);
-                singlePlayerDialog.getSinglePlayerPanel().getGameScreen().openMenuPanel();
-                break;
-            case "Pause":
-                singlePlayerDialog.pause();
-                break;
-            case "Resume":
-                singlePlayerDialog.resume();
-                break;
-            case "Rules":
-                singlePlayerDialog.disable();
-                singlePlayerDialog.getSinglePlayerPanel().openSinglePlayerRulesDialog();
-                break;
-            case "Play Again":
-                singlePlayerDialog.restart();
-                singlePlayerDialog.resume();
-                break;
-            case "Mute":
-                singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setSound(false);
-                singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setMusic(false);
-                singlePlayerDialog.mute();
-                break;
-            case "Unmute":
-                singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setSound(true);
-                singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setMusic(true);
-                singlePlayerDialog.getSinglePlayerPanel().getGameScreen().getSoundTrack().start();
-                singlePlayerDialog.unmute();
-                if (!singlePlayerDialog.getSoundClock().isRunning())
-                    singlePlayerDialog.getSoundClock().start();
-                break;
-            case "Rank":
-                singlePlayerDialog.disable();
-                singlePlayerDialog.getSinglePlayerPanel().openRankDialog();;
-            case "Save":
-                SinglePlayerDao.save(singlePlayerDialog);
-                break;
-            default:
-                break;
+        case "Home":
+            singlePlayerDialog.close();
+            singlePlayerDialog.getSinglePlayerPanel().close();
+            singlePlayerDialog.getSinglePlayerPanel().remove(singlePlayerDialog);
+            singlePlayerDialog.getSinglePlayerPanel().setSinglePlayerDialog(null);
+            singlePlayerDialog.getSinglePlayerPanel().getGameScreen().openMenuPanel();
+            break;
+        case "Pause":
+            singlePlayerDialog.pause();
+            break;
+        case "Resume":
+            singlePlayerDialog.resume();
+            break;
+        case "Rules":
+            singlePlayerDialog.disable();
+            singlePlayerDialog.getSinglePlayerPanel().openSinglePlayerRulesDialog();
+            break;
+        case "Play Again":
+            singlePlayerDialog.restart();
+            singlePlayerDialog.resume();
+            break;
+        case "Mute":
+            singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setSound(false);
+            singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setMusic(false);
+            singlePlayerDialog.mute();
+            break;
+        case "Unmute":
+            singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setSound(true);
+            singlePlayerDialog.getSinglePlayerPanel().getGameScreen().setMusic(true);
+            singlePlayerDialog.getSinglePlayerPanel().getGameScreen().getSoundTrack().start();
+            singlePlayerDialog.unmute();
+            if (!singlePlayerDialog.getSoundClock().isRunning())
+                singlePlayerDialog.getSoundClock().start();
+            break;
+        case "Rank":
+            singlePlayerDialog.disable();
+            singlePlayerDialog.getSinglePlayerPanel().openRankDialog();
+            ;
+        case "Save":
+            SinglePlayerDao.save(singlePlayerDialog);
+            break;
+        default:
+            break;
         }
         singlePlayerDialog.requestFocusInWindow();
     }

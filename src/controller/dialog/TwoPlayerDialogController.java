@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import untils.Sounds;
+import sound.Sounds;
 import view.dialog.TwoPlayerDialog;
 
 public class TwoPlayerDialogController implements KeyListener, ActionListener{

@@ -69,7 +69,7 @@ public class SinglePlayerMatchResultDialog extends JPanel {
         btnRank = Untils.getButton(ImagePaths.GAME_RANK_1, ImagePaths.GAME_RANK_2);
         btnRank.setBounds(351, 300, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_WIDTH);
         btnRank.setActionCommand("Rank");
-        btnHome.addActionListener(singlePlayerMatchResultDialogController);
+        btnRank.addActionListener(singlePlayerMatchResultDialogController);
         add(btnRank);
     }
 
@@ -90,7 +90,7 @@ public class SinglePlayerMatchResultDialog extends JPanel {
     }
 
     private void update() {
-        infoPlayer.setText("Player's name: " + singlePlayerPanel.getNewGameDialog().getPlayerName());
+        infoPlayer.setText("Player's name: " + singlePlayerPanel.getSinglePlayerDialog().getPlayerName());
         matchReSult.setText("Player's score: " + singlePlayerPanel.getSinglePlayerDialog().getPlayerScore());
     }
 

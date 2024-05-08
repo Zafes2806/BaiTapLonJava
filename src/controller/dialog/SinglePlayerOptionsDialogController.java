@@ -3,11 +3,12 @@ package controller.dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import untils.Sounds;
+import DAO.SinglePlayerDao;
+import sound.Sounds;
 import view.dialog.SinglePlayerOptionsDialog;
 import view.panel.SinglePlayerPanel;
 
-public class SinglePlayerOptionsDialogController implements ActionListener{
+public class SinglePlayerOptionsDialogController implements ActionListener {
     private SinglePlayerOptionsDialog singlePlayerOptionsDialog;
 
     public SinglePlayerOptionsDialogController(SinglePlayerOptionsDialog singlePlayerOptionsDialog) {
@@ -22,6 +23,19 @@ public class SinglePlayerOptionsDialogController implements ActionListener{
         }
         switch (e.getActionCommand()) {
         case "Continue":
+            singlePlayerPanel.closeSinglePlayerOptionsDialog();
+            singlePlayerPanel.startSinglePlayer();
+            singlePlayerPanel.getSinglePlayerDialog().pause();
+            if (SinglePlayerDao.continueSingleplayer(singlePlayerPanel.getSinglePlayerDialog()))
+                singlePlayerPanel.getSinglePlayerDialog().resume();
+            else {
+                singlePlayerPanel.getSinglePlayerDialog().close();
+                singlePlayerPanel.close();
+                singlePlayerPanel.remove(singlePlayerPanel.getSinglePlayerDialog());
+                singlePlayerPanel.setSinglePlayerDialog(null);
+                singlePlayerPanel.setVisible(true);
+                singlePlayerPanel.openNewGameDialog();
+            }
             break;
         case "New Game":
             singlePlayerPanel.closeSinglePlayerOptionsDialog();

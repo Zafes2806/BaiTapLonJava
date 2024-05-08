@@ -58,13 +58,13 @@ public class SoundClock implements Runnable {
                 if (panel instanceof SinglePlayerDialog) {
                     SinglePlayerDialog singlePlayerDialog = (SinglePlayerDialog) panel;
                     GameScreen gameScreen = singlePlayerDialog.getSinglePlayerPanel().getGameScreen();
-                    if (!gameScreen.isMusic() || singlePlayerDialog.getRemainingTime() > 5
+                    if (!gameScreen.isSound() || singlePlayerDialog.getRemainingTime() > 5
                             || singlePlayerDialog.getRemainingTime() < 0)
                         stop();
                 } else if (panel instanceof TwoPlayerDialog) {
                     TwoPlayerDialog twoPlayerDialog = (TwoPlayerDialog) panel;
                     GameScreen gameScreen = twoPlayerDialog.getTwoPlayerPanel().getGameScreen();
-                    if (!gameScreen.isMusic() || twoPlayerDialog.getRemainingTime() > 5
+                    if (!gameScreen.isSound() || twoPlayerDialog.getRemainingTime() > 5
                             || twoPlayerDialog.getRemainingTime() < 0)
                         stop();
                 }

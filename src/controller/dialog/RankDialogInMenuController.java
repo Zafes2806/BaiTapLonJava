@@ -3,8 +3,7 @@ package controller.dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-import untils.Sounds;
+import sound.Sounds;
 import view.dialog.RankDialogInMenu;
 import view.panel.MenuPanel;
 

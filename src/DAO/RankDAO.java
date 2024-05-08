@@ -151,7 +151,7 @@ public class RankDAO {
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
         try {
-            fileInputStream = new FileInputStream("data/playerID.txt");
+            fileInputStream = new FileInputStream("resource/data/playerID.txt");
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             try {
                 ID = Integer.parseInt(bufferedReader.readLine());
@@ -182,7 +182,7 @@ public class RankDAO {
         FileWriter fileWriter = null;
         PrintWriter printWriter = null;
         try {
-            fileWriter = new FileWriter("data/playerID.txt");
+            fileWriter = new FileWriter("resource/data/playerID.txt");
             printWriter = new PrintWriter(fileWriter);
             printWriter.println(ID);
             OK = true;

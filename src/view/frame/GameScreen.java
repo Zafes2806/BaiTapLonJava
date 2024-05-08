@@ -98,8 +98,4 @@ public class GameScreen extends JFrame {
     public void setMusic(boolean music) {
         this.music = music;
     }
-
-    public static void main(String[] args) {
-        new GameScreen(false, false);
-    }
 }

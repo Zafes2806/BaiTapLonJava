@@ -17,7 +17,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import DAO.RankDAO;
 import controller.dialog.SinglePlayerDialogController;
+import model.Player;
 import sound.SoundClock;
 import untils.ImagePaths;
 import untils.Untils;
@@ -75,6 +77,8 @@ public class SinglePlayerDialog extends JPanel {
                 if (remainingTime == 0) {
                     updateRemainingMoves();
                     getSinglePlayerPanel().getSinglePlayerDialog().disable();
+                    RankDAO.addPlayer(new Player(playerName, playerScore));
+                    RankDAO.updateRank();
                     getSinglePlayerPanel().openSinglePlayerMatchResultDialog();
                 }
             }
@@ -91,12 +95,14 @@ public class SinglePlayerDialog extends JPanel {
     }
 
     public void pause() {
+        timer.stop();
         status = false;
         btnPause.setVisible(false);
         btnResume.setVisible(true);
     }
 
     public void resume() {
+        timer.restart();
         status = true;
         btnResume.setVisible(false);
         btnPause.setVisible(true);
@@ -145,9 +151,13 @@ public class SinglePlayerDialog extends JPanel {
         remainingTime = MAX_TIME;
         remainingMoves = NUM_MOVES;
         playerScore = 0;
+        if (playerName == null)
+            playerName = getSinglePlayerPanel().getNewGameDialog().getPlayerName();
+            
         updateTimeLabel();
         updateRemainingMoves();
         updateScorePlayer();
+        updateNamePlayer();
     }
 
     private void initComponent() {
@@ -176,14 +186,14 @@ public class SinglePlayerDialog extends JPanel {
 
         JPanel panelInfoPlayer = new JPanel();
         panelInfoPlayer.setLayout(null);
-        panelInfoPlayer.setBounds(30, 355, 85, 150);
+        panelInfoPlayer.setBounds(30, 355, 120, 150);
         panelInfoPlayer.setOpaque(false);
         namePlayerLabel = new JLabel(getSinglePlayerPanel().getNewGameDialog().getPlayerName(), JLabel.CENTER);
-        namePlayerLabel.setBounds(0, 60, 85, 30);
+        namePlayerLabel.setBounds(0, 30, 120, 40);
         namePlayerLabel.setFont(maitree_16);
         panelInfoPlayer.add(namePlayerLabel);
-        scorePlayerLabel = new JLabel("0", JLabel.CENTER);
-        scorePlayerLabel.setBounds(0, 90, 85, 30);
+        scorePlayerLabel = new JLabel("Score: 0", JLabel.CENTER);
+        scorePlayerLabel.setBounds(0, 90, 120, 40);
         scorePlayerLabel.setFont(maitree_16);
         panelInfoPlayer.add(scorePlayerLabel);
         panel.add(panelInfoPlayer);
@@ -276,7 +286,7 @@ public class SinglePlayerDialog extends JPanel {
         this.remainingMoves = remainingMoves;
         this.remainingTime = remainingTime;
         updateNamePlayer();
-        updatePlayerScore();
+        updateScorePlayer();
         updateRemainingMoves();
         updateTimeLabel();
 
@@ -300,14 +310,10 @@ public class SinglePlayerDialog extends JPanel {
         namePlayerLabel.setText(playerName);
     }
 
-    private void updatePlayerScore() {
-        scorePlayerLabel.setText(playerScore + "");
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image image = new ImageIcon(ImagePaths.BACKGROUND_TWO_PLAYER).getImage();
+        Image image = new ImageIcon(ImagePaths.BACKGROUND_SINGLE_PLAYER).getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
@@ -322,7 +328,7 @@ public class SinglePlayerDialog extends JPanel {
             }
         }
         opacityPanel.setVisible(false);
-        timer.start();
+        timer.restart();
         this.addKeyListener(singlePlayerDialogController);
     }
 
@@ -363,7 +369,7 @@ public class SinglePlayerDialog extends JPanel {
     }
 
     public void updateScorePlayer() {
-        scorePlayerLabel.setText(playerScore + "");
+        scorePlayerLabel.setText("Score: " + playerScore);
     }
 
     public void updateRemainingMoves() {

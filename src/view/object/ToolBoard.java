@@ -8,23 +8,13 @@ import javax.swing.JPanel;
 
 public class ToolBoard extends JPanel {
 	private Tool[][] tools;
-	public Tool[][] getTools() {
-		return tools;
-	}
-
 	private final int boardSize = 9;
 	private final int boardWidth = 502;
 	private final int boardHeight = 502;
 	private int choiceX = boardSize / 2;
-	public int getChoiceX() {
-		return choiceX;
-	}
-
 	private int choiceY = boardSize / 2;
 
-	public int getChoiceY() {
-		return choiceY;
-	}
+	
 	public ToolBoard() {
 		setLayout(new GridLayout(boardSize, boardSize));
 		setPreferredSize(new Dimension(boardHeight, boardWidth));
@@ -130,6 +120,15 @@ public class ToolBoard extends JPanel {
 		if (choiceY + deltaY < 0 || choiceY + deltaY >= boardSize)
 			return false;
 		return true;
+	}
+	public int getChoiceX() {
+		return choiceX;
+	}
+	public Tool[][] getTools() {
+		return tools;
+	}
+	public int getChoiceY() {
+		return choiceY;
 	}
 
 	private void moveChoice(int deltaX, int deltaY) {
