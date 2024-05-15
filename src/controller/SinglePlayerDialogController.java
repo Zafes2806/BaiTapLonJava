@@ -24,7 +24,7 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (singlePlayerDialog.getStatus() == false)
+        if (singlePlayerDialog.getStatus() != SinglePlayerDialog.RUNNING)
             return;
 
         if (e.getKeyCode() != KeyEvent.VK_LEFT && e.getKeyCode() != KeyEvent.VK_A && e.getKeyCode() != KeyEvent.VK_RIGHT
@@ -94,7 +94,7 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
         singlePlayerDialog.updateTimeLabel();
         singlePlayerDialog.setRemainingMoves(SinglePlayerDialog.NUM_MOVES);
         singlePlayerDialog.updateRemainingMoves();
-
+                                
     }
 
     @Override

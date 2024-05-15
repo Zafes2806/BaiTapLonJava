@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import sound.Sounds;
+import view.dialog.SinglePlayerDialog;
 import view.dialog.SinglePlayerRulesDialog;
 import view.frame.GameScreen;
 import view.panel.SinglePlayerPanel;
 
-public class SinglePlayerRulesDialogController implements ActionListener{
+public class SinglePlayerRulesDialogController implements ActionListener {
     private SinglePlayerRulesDialog singlePlayerRulesDialog;
 
     public SinglePlayerRulesDialogController(SinglePlayerRulesDialog singlePlayerRulesDialog) {
@@ -27,10 +28,10 @@ public class SinglePlayerRulesDialogController implements ActionListener{
             singlePlayerPanel.closeSinglePlayerRulesDialog();
             if (singlePlayerPanel.getSinglePlayerDialog() == null) {
                 singlePlayerPanel.startSinglePlayer();
+                singlePlayerPanel.getSinglePlayerDialog()
+                        .setPlayerName(singlePlayerPanel.getNewGameDialog().getPlayerName());
             }
-            singlePlayerPanel.getSinglePlayerDialog().setPlayerName(singlePlayerPanel.getNewGameDialog().getPlayerName());
             singlePlayerPanel.getSinglePlayerDialog().enable();
-            
             singlePlayerPanel.getSinglePlayerDialog().requestFocus();
         }
 

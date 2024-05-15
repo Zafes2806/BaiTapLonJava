@@ -21,7 +21,7 @@ public class TwoPlayerDialogController implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (twoPlayerDialog.getStatus() == false)
+        if (twoPlayerDialog.getStatus() != TwoPlayerDialog.RUNNING)
             return;
 
         if (e.getKeyCode() != KeyEvent.VK_LEFT && e.getKeyCode() != KeyEvent.VK_A && e.getKeyCode() != KeyEvent.VK_RIGHT

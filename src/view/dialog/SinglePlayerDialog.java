@@ -32,6 +32,9 @@ public class SinglePlayerDialog extends JPanel {
     public static final int HEIGHT = 800;
     public static final int MAX_TIME = 30;
     public static final int NUM_MOVES = 3;
+    public static final int PAUSE = 0;
+    public static final int ENDGAME = 1;
+    public static final int RUNNING = 2;
     private int remainingTime;
     private int remainingMoves;
     private int playerScore;
@@ -51,7 +54,7 @@ public class SinglePlayerDialog extends JPanel {
     private JButton btnHome, btnPause, btnResume, btnPlayAgain, btnMute, btnUnmute, btnRules, btnRank, btnSave;
 
     private Timer timer;
-    private boolean status;
+    private int status;
     private SoundClock soundClock;
 
     public SinglePlayerDialog(SinglePlayerPanel singlePlayerPanel) {
@@ -65,7 +68,7 @@ public class SinglePlayerDialog extends JPanel {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (status == false)
+                if (status != RUNNING)
                     return;
                 remainingTime--;
                 updateTimeLabel();
@@ -82,7 +85,7 @@ public class SinglePlayerDialog extends JPanel {
                 }
             }
         });
-        status = true;
+        status = RUNNING;
         initComponent();
         initInfoPlayers();
         setVisible(false);
@@ -94,17 +97,21 @@ public class SinglePlayerDialog extends JPanel {
     }
 
     public void pause() {
-        timer.stop();
-        status = false;
         btnPause.setVisible(false);
         btnResume.setVisible(true);
+        if (status == ENDGAME)
+            return;
+        // timer.stop();
+        status = PAUSE;
     }
 
     public void resume() {
-        timer.restart();
-        status = true;
         btnResume.setVisible(false);
         btnPause.setVisible(true);
+        if (status == ENDGAME)
+            return;
+        // timer.restart();
+        status = RUNNING;
     }
 
     public void mute() {
@@ -117,12 +124,13 @@ public class SinglePlayerDialog extends JPanel {
         btnMute.setVisible(true);
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
     public void restart() {
         initInfoPlayers();
+        status = RUNNING;
 
         panel.remove(toolBoard);
         toolBoard = new ToolBoard();
@@ -147,7 +155,6 @@ public class SinglePlayerDialog extends JPanel {
     }
 
     private void initInfoPlayers() {
-        status = true;
         remainingTime = MAX_TIME;
         remainingMoves = NUM_MOVES;
         playerScore = 0;
@@ -328,11 +335,13 @@ public class SinglePlayerDialog extends JPanel {
             }
         }
         opacityPanel.setVisible(false);
-        timer.restart();
+        if (status == RUNNING)
+            timer.restart();
         this.addKeyListener(singlePlayerDialogController);
     }
 
     public void endgame() {
+        status = ENDGAME;
         timer.stop();
         this.setFocusable(false);
     }
