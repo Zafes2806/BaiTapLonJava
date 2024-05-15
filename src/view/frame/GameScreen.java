@@ -12,11 +12,6 @@ public class GameScreen extends JFrame {
     private boolean sound;
 
     private SoundTrack soundTrack;
-
-    public SoundTrack getSoundTrack() {
-        return soundTrack;
-    }
-
     private MenuPanel menuPanel;
     private SinglePlayerPanel singlePlayerPanel;
     private TwoPlayerPanel twoPlayerPanel;
@@ -97,5 +92,8 @@ public class GameScreen extends JFrame {
 
     public void setMusic(boolean music) {
         this.music = music;
+    }
+    public SoundTrack getSoundTrack() {
+        return soundTrack;
     }
 }

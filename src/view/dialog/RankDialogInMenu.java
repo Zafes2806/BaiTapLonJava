@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import DAO.RankDAO;
-import controller.dialog.RankDialogInMenuController;
+import controller.RankDialogInMenuController;
 import model.Player;
 import untils.Constant;
 import untils.ImagePaths;
@@ -32,7 +32,6 @@ public class RankDialogInMenu extends JPanel {
     private List<Player> players = new ArrayList<>();
 
     private MenuPanel menuPanel;
-
     private JButton btnExit;
 
     public RankDialogInMenu(MenuPanel menuPanel) {
@@ -45,7 +44,7 @@ public class RankDialogInMenu extends JPanel {
         setVisible(false);
     }
 
-    void initComponents() {
+    private void initComponents() {
         JPanel infoRank = new JPanel();
         infoRank.setLayout(null);
         infoRank.setBounds(85, 150, 480, 200);
@@ -86,7 +85,6 @@ public class RankDialogInMenu extends JPanel {
             names.get(i).setText(players.get(i).getName());
             scores.get(i).setText(players.get(i).getScore() + "");
         }
-        System.out.println(players.size());
         for (int i = players.size(); i < MAX_PLAYERS; i++) {
             names.get(i).setText("");
             scores.get(i).setText("");

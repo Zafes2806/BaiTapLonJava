@@ -1,4 +1,4 @@
-package controller.dialog;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,12 +21,8 @@ public class RankDialogInSinglePlayerController implements ActionListener {
             Sounds.clickButtonSound();
         if (e.getActionCommand().equals("Exit")) {
             singlePlayerPanel.closeRankDialog();
-            if (singlePlayerPanel.getSinglePlayerDialog().getRemainingTime() == 0
-                    || singlePlayerPanel.getSinglePlayerDialog().getRemainingMoves() == 0) {
-                singlePlayerPanel.openSinglePlayerMatchResultDialog();
-            } else {
-                singlePlayerPanel.getSinglePlayerDialog().enable();
-            }
+            singlePlayerPanel.getSinglePlayerDialog().enable();
+            singlePlayerPanel.getSinglePlayerDialog().requestFocus();
         }
     }
 }

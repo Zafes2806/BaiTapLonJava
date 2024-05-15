@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import untils.ImagePaths;
-import view.dialog.TwoPlayerMatchResultDialog;
 import view.dialog.TwoPlayerDialog;
 import view.dialog.TwoPlayerRulesDialog;
 import view.frame.GameScreen;
@@ -21,7 +20,6 @@ public class TwoPlayerPanel extends JPanel {    // Cửa sổ chế độ chơi 
 
     private TwoPlayerDialog twoPlayerDialog;
     private TwoPlayerRulesDialog twoPlayerRulesDialog;
-    private TwoPlayerMatchResultDialog twoPlayerMatchResultDialog;
 
     public TwoPlayerPanel(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -34,13 +32,8 @@ public class TwoPlayerPanel extends JPanel {    // Cửa sổ chế độ chơi 
 
     public void initComponent() {
         twoPlayerRulesDialog = new TwoPlayerRulesDialog(this);
-        twoPlayerRulesDialog.setBounds(213, 200, TwoPlayerRulesDialog.WIDTH, TwoPlayerRulesDialog.HEIGHT);
+        twoPlayerRulesDialog.setBounds(213, 170, TwoPlayerRulesDialog.WIDTH, TwoPlayerRulesDialog.HEIGHT);
         this.add(twoPlayerRulesDialog);
-
-        twoPlayerMatchResultDialog = new TwoPlayerMatchResultDialog(this);
-        twoPlayerMatchResultDialog.setBounds(225, 200, TwoPlayerMatchResultDialog.WIDTH,
-                TwoPlayerMatchResultDialog.HEIGHT);
-        this.add(twoPlayerMatchResultDialog);
     }
 
     @Override
@@ -65,14 +58,6 @@ public class TwoPlayerPanel extends JPanel {    // Cửa sổ chế độ chơi 
 
     public void closeTwoPlayerRulesDialog() {
         twoPlayerRulesDialog.setVisible(false);
-    }
-
-    public void openTwoPlayerMatchResultDialog() {
-        twoPlayerMatchResultDialog.open();
-    }
-
-    public void closeTwoPlayerMatchResultDialog() {
-        twoPlayerMatchResultDialog.close();
     }
 
     public TwoPlayerDialog getTwoPlayerDialog() {

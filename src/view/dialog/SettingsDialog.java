@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.dialog.SettingsDialogController;
+import controller.SettingsDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
@@ -26,8 +26,6 @@ public class SettingsDialog extends JPanel {
     private JButton btnSoundOFF;
     private JButton btnSoundON;
     private JButton btnExit;
-    private boolean sound;
-
 
     public SettingsDialog(MenuPanel menuPanel) {
         this.menuPanel = menuPanel;
@@ -39,7 +37,7 @@ public class SettingsDialog extends JPanel {
         setVisible(false);
     }
 
-    public void initComponents() {
+    private void initComponents() {
         btnMusicOFF = Untils.getButton(ImagePaths.MENU_OFF_1, ImagePaths.MENU_OFF_2);
         btnMusicOFF.setBounds(250, 78, 69, 27);
         btnMusicOFF.setActionCommand("Music OFF");
@@ -90,26 +88,16 @@ public class SettingsDialog extends JPanel {
     }
 
     public void offSound() {
-        sound = false;
         btnSoundOFF.setVisible(false);
         btnSoundON.setVisible(true);
     }
     public void onSound() {
-        sound = true;
         btnSoundOFF.setVisible(true);
         btnSoundON.setVisible(false);
     }
 
     public MenuPanel getMenuPanel() {
         return menuPanel;
-    }
-
-    public boolean isSound() {
-        return sound;
-    }
-
-    public void setSound(boolean sound) {
-        this.sound = sound;
     }
 
     public void open() {

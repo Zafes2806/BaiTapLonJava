@@ -8,17 +8,13 @@ import javax.swing.JPanel;
 
 public class ToolDice extends JPanel {
 	private Tool[] tools = new Tool[6];
-	public Tool[] getTools() {
-		return tools;
-	}
-
-	private final int toolDiceWidth = 168;
-	private final int toolDiceHeight = 224;
+	public static final int WIDTH = 168;
+	public static final int HEIGHT = 224;
 
 	public ToolDice() {
 		setLayout(null);
-		setPreferredSize(new Dimension(toolDiceWidth, toolDiceHeight));
-		setSize(new Dimension(toolDiceWidth, toolDiceHeight));
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setSize(new Dimension(WIDTH, HEIGHT));
 
 		tools[0] = new Rock();
 		tools[0].setBounds(56, 0, 50, 50);
@@ -49,8 +45,8 @@ public class ToolDice extends JPanel {
 
 	public ToolDice(int a[]) {
 		setLayout(null);
-		setPreferredSize(new Dimension(toolDiceWidth, toolDiceHeight));
-		setSize(new Dimension(toolDiceWidth, toolDiceHeight));
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setSize(new Dimension(WIDTH, HEIGHT));
 
 		if (a[0] == 0)
 			tools[0] = new Rock();
@@ -209,16 +205,11 @@ public class ToolDice extends JPanel {
 		this.tools = tools;
 	}
 
-	public int getToolDiceWidth() {
-		return toolDiceWidth;
-	}
-
-	public int getToolDiceHeight() {
-		return toolDiceHeight;
-	}
-
 	private void changeTool(int x, Tool tool, Rectangle rectangle) {
 		tools[x] = tool;
 		tools[x].setBounds(rectangle);
+	}
+	public Tool[] getTools() {
+		return tools;
 	}
 }

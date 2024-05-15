@@ -12,14 +12,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
-import controller.dialog.TwoPlayerDialogController;
+import controller.TwoPlayerDialogController;
 import sound.SoundClock;
 import untils.ImagePaths;
 import untils.Untils;
@@ -39,7 +38,6 @@ public class TwoPlayerDialog extends JPanel {
     public static final int NUM_PLAYS = 5;
     public static final int NUM_MOVES = 3;
     private int remainingTime;
-   
 
     private int remainingMoves;
     private int player1Plays;
@@ -92,8 +90,7 @@ public class TwoPlayerDialog extends JPanel {
                     else
                         player2Plays--;
                     if (finishedRound() && checkWin()) {
-                        getTwoPlayerPanel().getTwoPlayerDialog().disable();
-                        getTwoPlayerPanel().openTwoPlayerMatchResultDialog();
+                        endgame();
                         return;
                     }
                     if (finishedRound()) {
@@ -128,10 +125,12 @@ public class TwoPlayerDialog extends JPanel {
         btnResume.setVisible(false);
         btnPause.setVisible(true);
     }
+
     public void mute() {
         btnMute.setVisible(false);
         btnUnmute.setVisible(true);
     }
+
     public void unmute() {
         btnUnmute.setVisible(false);
         btnMute.setVisible(true);
@@ -159,7 +158,9 @@ public class TwoPlayerDialog extends JPanel {
         revalidate();
         repaint();
         timer.restart();
+        this.setFocusable(true);
     }
+
     public SoundClock getSoundClock() {
         return soundClock;
     }
@@ -183,7 +184,7 @@ public class TwoPlayerDialog extends JPanel {
     private void initComponent() {
         jLayeredPane = new JLayeredPane();
         jLayeredPane.setBounds(0, 0, WIDTH, HEIGHT);
-        
+
         opacityPanel = new JPanel() {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -195,15 +196,15 @@ public class TwoPlayerDialog extends JPanel {
         opacityPanel.setOpaque(false);
         opacityPanel.setVisible(false);
         jLayeredPane.add(opacityPanel, JLayeredPane.PALETTE_LAYER);
-        
+
         panel = new JPanel();
         panel.setLayout(null);
         panel.setBounds(0, 0, WIDTH, HEIGHT);
         panel.setOpaque(false);
         jLayeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
-        
+
         Font maitree_16 = Untils.getFont(16);
-        
+
         JPanel panelPlayers = new JPanel(new GridBagLayout());
         panelPlayers.setBounds(30, 355, 85, 150);
         GridBagConstraints c = new GridBagConstraints();
@@ -230,7 +231,7 @@ public class TwoPlayerDialog extends JPanel {
         panelPlayers.add(player2Label, c);
         panelPlayers.setOpaque(false);
         panel.add(panelPlayers);
-        
+
         JPanel infoPanel = new JPanel(new GridLayout(4, 1));
         roundLabel = new JLabel("", JLabel.CENTER);
         roundLabel.setFont(maitree_16);
@@ -247,62 +248,62 @@ public class TwoPlayerDialog extends JPanel {
         infoPanel.setBounds(400, 35, 210, 80);
         infoPanel.setOpaque(false);
         panel.add(infoPanel);
-        
+
         toolBoard = new ToolBoard();
-        toolBoard.setBounds(249, 190, 502, 502);
+        toolBoard.setBounds(249, 190, ToolBoard.WIDTH, ToolBoard.HEIGHT);
         toolBoard.setOpaque(false);
         panel.add(toolBoard);
-        
+
         toolDice = new ToolDice();
-        toolDice.setBounds(890, 317, 168, 224);
+        toolDice.setBounds(890, 317, ToolDice.WIDTH, ToolDice.HEIGHT);
         toolDice.setOpaque(false);
         panel.add(toolDice);
-        
+
         btnHome = Untils.getButton(ImagePaths.GAME_HOME_1, ImagePaths.GAME_HOME_2);
         btnHome.setBounds(5, 5, 50, 50);
         btnHome.setActionCommand("Home");
         btnHome.addActionListener(twoPlayerDialogController);
         panel.add(btnHome);
-        
+
         btnPause = Untils.getButton(ImagePaths.GAME_PAUSE_1, ImagePaths.GAME_PAUSE_2);
         btnPause.setBounds(60, 5, 50, 50);
         btnPause.setActionCommand("Pause");
         btnPause.addActionListener(twoPlayerDialogController);
         panel.add(btnPause);
-        
+
         btnResume = Untils.getButton(ImagePaths.GAME_RESUME_1, ImagePaths.GAME_RESUME_2);
         btnResume.setBounds(60, 5, 50, 50);
         btnResume.setActionCommand("Resume");
         btnResume.addActionListener(twoPlayerDialogController);
         btnResume.setVisible(false);
         panel.add(btnResume);
-        
+
         btnRules = Untils.getButton(ImagePaths.GAME_RULES_1, ImagePaths.GAME_RULES_2);
         btnRules.setBounds(115, 5, 50, 50);
         btnRules.setActionCommand("Rules");
         btnRules.addActionListener(twoPlayerDialogController);
         btnRules.setVisible(true);
         panel.add(btnRules);
-        
+
         btnPlayAgain = Untils.getButton(ImagePaths.GAME_PLAY_AGAIN_1, ImagePaths.GAME_PLAY_AGAIN_2);
         btnPlayAgain.setBounds(5, 60, 50, 50);
         btnPlayAgain.setActionCommand("Play Again");
         btnPlayAgain.addActionListener(twoPlayerDialogController);
         panel.add(btnPlayAgain);
-        
+
         btnMute = Untils.getButton(ImagePaths.GAME_MUTE_1, ImagePaths.GAME_MUTE_2);
         btnMute.setBounds(60, 60, 50, 50);
         btnMute.setActionCommand("Mute");
         btnMute.addActionListener(twoPlayerDialogController);
         panel.add(btnMute);
-        
+
         btnUnmute = Untils.getButton(ImagePaths.GAME_UNMUTE_1, ImagePaths.GAME_UNMUTE_2);
         btnUnmute.setBounds(60, 60, 50, 50);
         btnUnmute.setActionCommand("Unmute");
         btnUnmute.addActionListener(twoPlayerDialogController);
         btnUnmute.setVisible(false);
         panel.add(btnUnmute);
-       
+
         add(jLayeredPane);
     }
 
@@ -340,6 +341,22 @@ public class TwoPlayerDialog extends JPanel {
         opacityPanel.setVisible(true);
     }
 
+    public void endgame() {
+        timer.stop();
+        this.setFocusable(false);
+        roundLabel.setText("Match score: " + player1Score + " - " + player2Score);
+        infoLabel.setText("");
+        String result;
+        if (player1Score > player2Score)
+            result = "Player 1 is the winner!";
+        else if (player1Score < player2Score)
+            result = "Player 2 is the winner!";
+        else
+            result = "It is a draw!";
+        remainingMovesLabel.setText(result);
+        timeLabel.setText("");
+    }
+
     public void open() {
         if (getTwoPlayerPanel().getGameScreen().isMusic()) {
             btnMute.setVisible(true);
@@ -361,6 +378,8 @@ public class TwoPlayerDialog extends JPanel {
     }
 
     private boolean checkWinningMove() {
+        if (toolBoard.isMoveBackToSecondPrevious())
+            return false;
         return toolDice.getChoice().compareTo(toolBoard.getChoice()) == 1;
     }
 
@@ -414,6 +433,7 @@ public class TwoPlayerDialog extends JPanel {
             player2Plays--;
             updateScorePlayer2();
         }
+        toolBoard.updatePreMove();
     }
 
     public ToolBoard getToolBoard() {
@@ -495,6 +515,7 @@ public class TwoPlayerDialog extends JPanel {
     public JButton getBtnHome() {
         return btnHome;
     }
+
     public int getRemainingTime() {
         return remainingTime;
     }

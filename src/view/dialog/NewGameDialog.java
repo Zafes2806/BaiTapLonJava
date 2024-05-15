@@ -12,14 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.dialog.NewGameDialogController;
+import controller.NewGameDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
 import view.panel.SinglePlayerPanel;
 
 public class NewGameDialog extends JPanel {
-
     public static final int WIDTH = 439;
     public static final int HEIGHT = 302;
     private String playerName;

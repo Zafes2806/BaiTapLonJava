@@ -11,7 +11,6 @@ import untils.ImagePaths;
 import view.dialog.NewGameDialog;
 import view.dialog.RankDialogInSinglePlayer;
 import view.dialog.SinglePlayerDialog;
-import view.dialog.SinglePlayerMatchResultDialog;
 import view.dialog.SinglePlayerOptionsDialog;
 import view.dialog.SinglePlayerRulesDialog;
 import view.frame.GameScreen;
@@ -26,8 +25,7 @@ public class SinglePlayerPanel extends JPanel {
     private SinglePlayerOptionsDialog singlePlayerOptionsDialog;
     private NewGameDialog newGameDialog;
     private SinglePlayerRulesDialog singlePlayerRulesDialog;
-    private SinglePlayerMatchResultDialog singlePlayerMatchResultDialog;
-    private RankDialogInSinglePlayer rankDialog;
+    private RankDialogInSinglePlayer rankDialogInSinglePlayer;
 
     public SinglePlayerPanel(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -52,14 +50,9 @@ public class SinglePlayerPanel extends JPanel {
         singlePlayerRulesDialog.setBounds(213, 200, SinglePlayerRulesDialog.WIDTH, SinglePlayerRulesDialog.HEIGHT);
         add(singlePlayerRulesDialog);
 
-        singlePlayerMatchResultDialog = new SinglePlayerMatchResultDialog(this);
-        singlePlayerMatchResultDialog.setBounds(225, 200, SinglePlayerMatchResultDialog.WIDTH,
-                SinglePlayerMatchResultDialog.HEIGHT);
-        add(singlePlayerMatchResultDialog);
-        
-        rankDialog = new RankDialogInSinglePlayer(this);
-        rankDialog.setBounds(225, 200, RankDialogInSinglePlayer.WIDTH, RankDialogInSinglePlayer.HEIGHT);
-        this.add(rankDialog);
+        rankDialogInSinglePlayer = new RankDialogInSinglePlayer(this);
+        rankDialogInSinglePlayer.setBounds(225, 200, RankDialogInSinglePlayer.WIDTH, RankDialogInSinglePlayer.HEIGHT);
+        this.add(rankDialogInSinglePlayer);
     }
 
     @Override
@@ -71,7 +64,7 @@ public class SinglePlayerPanel extends JPanel {
 
     public void startSinglePlayer() {
         singlePlayerDialog = new SinglePlayerDialog(this);
-        singlePlayerDialog.setBounds(0, 0, SinglePlayerDialog.WIDTH, SinglePlayerDialog.HEIGHT);
+        singlePlayerDialog.setBounds(0, 0, WIDTH, HEIGHT);
         this.add(singlePlayerDialog);
         singlePlayerDialog.open();
         singlePlayerDialog.requestFocus();
@@ -106,20 +99,12 @@ public class SinglePlayerPanel extends JPanel {
         singlePlayerRulesDialog.close();
     }
 
-    public void openSinglePlayerMatchResultDialog() {
-        singlePlayerMatchResultDialog.open();
-    }
-
-    public void closeSinglePlayerMatchResultDialog() {
-        singlePlayerMatchResultDialog.close();
-    }
-
     public void openRankDialog() {
-        rankDialog.open();
+        rankDialogInSinglePlayer.open();
     }
 
     public void closeRankDialog() {
-        rankDialog.close();
+        rankDialogInSinglePlayer.close();
     }
 
     public void open() {
@@ -147,11 +132,8 @@ public class SinglePlayerPanel extends JPanel {
         return singlePlayerDialog;
     }
 
-    public void setSinglePlayerDialog(SinglePlayerDialog singlePlayerDialog) { 
+    public void setSinglePlayerDialog(SinglePlayerDialog singlePlayerDialog) {
         this.singlePlayerDialog = singlePlayerDialog;
-     }
+    }
 
-   
-
-    
 }

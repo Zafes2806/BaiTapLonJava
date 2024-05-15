@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import DAO.RankDAO;
-import controller.dialog.RankDialogInSinglePlayerController;
+import controller.RankDialogInSinglePlayerController;
 import model.Player;
 import untils.Constant;
 import untils.ImagePaths;
@@ -34,8 +34,8 @@ public class RankDialogInSinglePlayer extends JPanel {
     private SinglePlayerPanel SinglePlayerPanel;
     private JButton btnExit;
 
-    public RankDialogInSinglePlayer(SinglePlayerPanel SinglePlayerPanel) {
-        this.SinglePlayerPanel = SinglePlayerPanel;
+    public RankDialogInSinglePlayer(SinglePlayerPanel singlePlayerPanel) {
+        this.SinglePlayerPanel = singlePlayerPanel;
         rankDialogController = new RankDialogInSinglePlayerController(this);
         setLayout(null);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -85,7 +85,6 @@ public class RankDialogInSinglePlayer extends JPanel {
             names.get(i).setText(players.get(i).getName());
             scores.get(i).setText(players.get(i).getScore() + "");
         }
-        System.out.println(players.size());
         for (int i = players.size(); i < MAX_PLAYERS; i++) {
             names.get(i).setText("");
             scores.get(i).setText("");

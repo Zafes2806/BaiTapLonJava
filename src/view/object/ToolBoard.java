@@ -9,15 +9,18 @@ import javax.swing.JPanel;
 public class ToolBoard extends JPanel {
 	private Tool[][] tools;
 	private final int boardSize = 9;
-	private final int boardWidth = 502;
-	private final int boardHeight = 502;
+	public static final int WIDTH = 502;
+	public static final int HEIGHT = 502;
 	private int choiceX = boardSize / 2;
 	private int choiceY = boardSize / 2;
+	private int preChoiceX = boardSize / 2;
+	private int preChoiceY = boardSize / 2;
+	private int secondPreChoiceX = boardSize / 2;
+	private int secondPreChoiceY = boardSize / 2;
 
-	
 	public ToolBoard() {
 		setLayout(new GridLayout(boardSize, boardSize));
-		setPreferredSize(new Dimension(boardHeight, boardWidth));
+		setPreferredSize(new Dimension(HEIGHT, WIDTH));
 		tools = new Tool[boardSize][boardSize];
 		Random random = new Random();
 		int preIDTool = -1;
@@ -40,9 +43,10 @@ public class ToolBoard extends JPanel {
 		tools[choiceX][choiceY].setBackground(Color.green);
 		tools[choiceX][choiceY].setOpaque(true);
 	}
-	public ToolBoard(int a[][], int x, int y) {
+
+	public ToolBoard(int a[][], int choiceX, int choiceY, int preChoiceX, int preChoiceY, int secondPreChoiceX, int secondPreChoiceY) {
 		setLayout(new GridLayout(boardSize, boardSize));
-		setPreferredSize(new Dimension(boardHeight, boardWidth));
+		setPreferredSize(new Dimension(HEIGHT, WIDTH));
 		tools = new Tool[boardSize][boardSize];
 		for (int i = 0; i < boardSize; i++) {
 			for (int j = 0; j < boardSize; j++) {
@@ -55,8 +59,12 @@ public class ToolBoard extends JPanel {
 				this.add(tools[i][j]);
 			}
 		}
-		choiceX = x;
-		choiceY = y;
+		this.choiceX = choiceX;
+		this.choiceY = choiceY;
+		this.preChoiceX = preChoiceX;
+		this.preChoiceY = preChoiceY;
+		this.secondPreChoiceX = secondPreChoiceX;
+		this.secondPreChoiceY = secondPreChoiceY;
 		tools[choiceX][choiceY].setBackground(Color.green);
 		tools[choiceX][choiceY].setOpaque(true);
 	}
@@ -91,6 +99,13 @@ public class ToolBoard extends JPanel {
 		tools[choiceX][choiceY].setOpaque(true);
 	}
 
+	public void updatePreMove() {
+		secondPreChoiceX = preChoiceX;
+		secondPreChoiceY = preChoiceY;
+		preChoiceX = choiceX;
+		preChoiceY = choiceY;
+	}
+
 	public void moveRight() {
 		if (!isValidMove(0, 1))
 			return;
@@ -107,7 +122,7 @@ public class ToolBoard extends JPanel {
 	}
 
 	public Dimension getPreferredDimension() {
-		return new Dimension(boardWidth, boardHeight);
+		return new Dimension(WIDTH, HEIGHT);
 	}
 
 	public int getBoardSize() {
@@ -121,12 +136,19 @@ public class ToolBoard extends JPanel {
 			return false;
 		return true;
 	}
+
+	public boolean isMoveBackToSecondPrevious() {
+		return (secondPreChoiceX == choiceX && secondPreChoiceY == choiceY);
+	}
+
 	public int getChoiceX() {
 		return choiceX;
 	}
+
 	public Tool[][] getTools() {
 		return tools;
 	}
+
 	public int getChoiceY() {
 		return choiceY;
 	}
@@ -134,5 +156,37 @@ public class ToolBoard extends JPanel {
 	private void moveChoice(int deltaX, int deltaY) {
 		choiceX += deltaX;
 		choiceY += deltaY;
+	}
+
+	public int getPreChoiceX() {
+		return preChoiceX;
+	}
+
+	public int getPreChoiceY() {
+		return preChoiceY;
+	}
+
+	public void setPreChoiceY(int preChoiceY) {
+		this.preChoiceY = preChoiceY;
+	}
+
+	public void setPreChoiceX(int preChoiceX) {
+		this.preChoiceX = preChoiceX;
+	}
+
+	public int getSecondPreChoiceX() {
+		return secondPreChoiceX;
+	}
+
+	public void setSecondPreChoiceX(int secondPreChoiceX) {
+		this.secondPreChoiceX = secondPreChoiceX;
+	}
+
+	public int getSecondPreChoiceY() {
+		return secondPreChoiceY;
+	}
+
+	public void setSecondPreChoiceY(int secondPreChoiceY) {
+		this.secondPreChoiceY = secondPreChoiceY;
 	}
 }

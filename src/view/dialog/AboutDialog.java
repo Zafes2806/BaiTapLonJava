@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.dialog.AboutDialogController;
+import controller.AboutDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
@@ -17,7 +17,9 @@ import view.panel.MenuPanel;
 public class AboutDialog extends JPanel {
     public static final int WIDTH = 627;
     public static final int HEIGHT = 385;
+
     private AboutDialogController aboutDialogController;
+    
     private MenuPanel menuPanel;
     private JButton btnExit;
 

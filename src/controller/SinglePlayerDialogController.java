@@ -1,4 +1,4 @@
-package controller.dialog;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import DAO.RankDAO;
-import DAO.SinglePlayerDao;
+import DAO.SinglePlayerDAO;
 import model.Player;
 import sound.Sounds;
 import view.dialog.SinglePlayerDialog;
@@ -80,17 +80,16 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
             singlePlayerDialog.updateRemainingMoves();
             return;
         }
-        singlePlayerDialog.completePlayerMove();
         singlePlayerDialog.updateRemainingMoves();
         if (!singlePlayerDialog.checkWinningMove()) {
-            singlePlayerDialog.disable();
             String playerName = singlePlayerDialog.getPlayerName();
             int playerScore = singlePlayerDialog.getPlayerScore();
             RankDAO.addPlayer(new Player(playerName, playerScore));
             RankDAO.updateRank();
-            singlePlayerDialog.getSinglePlayerPanel().openSinglePlayerMatchResultDialog();
+            singlePlayerDialog.getSinglePlayerPanel().getSinglePlayerDialog().endgame();
             return;
         }
+        singlePlayerDialog.completePlayerMove();
         singlePlayerDialog.setRemainingTime(SinglePlayerDialog.MAX_TIME);
         singlePlayerDialog.updateTimeLabel();
         singlePlayerDialog.setRemainingMoves(SinglePlayerDialog.NUM_MOVES);
@@ -147,7 +146,7 @@ public class SinglePlayerDialogController implements KeyListener, ActionListener
             singlePlayerDialog.getSinglePlayerPanel().openRankDialog();
             ;
         case "Save":
-            SinglePlayerDao.save(singlePlayerDialog);
+            SinglePlayerDAO.save(singlePlayerDialog);
             break;
         default:
             break;

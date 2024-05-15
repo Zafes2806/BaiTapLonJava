@@ -9,7 +9,7 @@ import javax.swing.JButton;
 
 import javax.swing.JPanel;
 
-import controller.dialog.TwoPlayerRulesDialogController;
+import controller.TwoPlayerRulesDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
@@ -17,7 +17,7 @@ import view.panel.TwoPlayerPanel;
 
 public class TwoPlayerRulesDialog extends JPanel {
     public static final int WIDTH = 674;
-    public static final int HEIGHT = 485;
+    public static final int HEIGHT = 546;
 
     private TwoPlayerRulesDialogController twoPlayerRulesDialogController;
     private TwoPlayerPanel twoPlayerPanel;
@@ -30,7 +30,7 @@ public class TwoPlayerRulesDialog extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         btnOK = Untils.getButton(ImagePaths.GAME_OK_1, ImagePaths.GAME_OK_2);
-        btnOK.setBounds(312, 425, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        btnOK.setBounds(312, 490, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
         btnOK.setActionCommand("OK");
         btnOK.addActionListener(twoPlayerRulesDialogController);
         add(btnOK);

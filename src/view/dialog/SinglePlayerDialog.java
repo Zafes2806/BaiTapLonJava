@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import DAO.RankDAO;
-import controller.dialog.SinglePlayerDialogController;
+import controller.SinglePlayerDialogController;
 import model.Player;
 import sound.SoundClock;
 import untils.ImagePaths;
@@ -76,10 +76,9 @@ public class SinglePlayerDialog extends JPanel {
                 }
                 if (remainingTime == 0) {
                     updateRemainingMoves();
-                    getSinglePlayerPanel().getSinglePlayerDialog().disable();
                     RankDAO.addPlayer(new Player(playerName, playerScore));
                     RankDAO.updateRank();
-                    getSinglePlayerPanel().openSinglePlayerMatchResultDialog();
+                    endgame();
                 }
             }
         });
@@ -127,19 +126,20 @@ public class SinglePlayerDialog extends JPanel {
 
         panel.remove(toolBoard);
         toolBoard = new ToolBoard();
-        toolBoard.setBounds(249, 190, 502, 502);
+        toolBoard.setBounds(249, 190, ToolBoard.WIDTH, ToolBoard.HEIGHT);
         toolBoard.setOpaque(false);
         panel.add(toolBoard);
 
         panel.remove(toolDice);
         toolDice = new ToolDice();
-        toolDice.setBounds(890, 317, 168, 224);
+        toolDice.setBounds(890, 317, ToolDice.WIDTH, ToolDice.HEIGHT);
         toolDice.setOpaque(false);
         panel.add(toolDice);
 
         revalidate();
         repaint();
         timer.restart();
+        this.setFocusable(true);
     }
 
     public SoundClock getSoundClock() {
@@ -153,7 +153,7 @@ public class SinglePlayerDialog extends JPanel {
         playerScore = 0;
         if (playerName == null)
             playerName = getSinglePlayerPanel().getNewGameDialog().getPlayerName();
-            
+
         updateTimeLabel();
         updateRemainingMoves();
         updateScorePlayer();
@@ -332,6 +332,11 @@ public class SinglePlayerDialog extends JPanel {
         this.addKeyListener(singlePlayerDialogController);
     }
 
+    public void endgame() {
+        timer.stop();
+        this.setFocusable(false);
+    }
+
     public void disable() {
         for (Component c : panel.getComponents()) {
             if (c instanceof JButton) {
@@ -361,6 +366,8 @@ public class SinglePlayerDialog extends JPanel {
     }
 
     public boolean checkWinningMove() {
+        if (toolBoard.isMoveBackToSecondPrevious())
+            return false;
         return toolDice.getChoice().compareTo(toolBoard.getChoice()) == 1;
     }
 
@@ -381,6 +388,7 @@ public class SinglePlayerDialog extends JPanel {
             playerScore++;
         }
         updateScorePlayer();
+        toolBoard.updatePreMove();
     }
 
     public ToolBoard getToolBoard() {

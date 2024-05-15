@@ -8,19 +8,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.dialog.SinglePlayerRulesDialogController;
+import controller.SinglePlayerRulesDialogController;
 import untils.Constant;
 import untils.ImagePaths;
 import untils.Untils;
 import view.panel.SinglePlayerPanel;
 
 public class SinglePlayerRulesDialog extends JPanel {
+    public static final int WIDTH = 671;
+    public static final int HEIGHT = 504;
+    
     private SinglePlayerPanel singlePlayerPanel;
-
-    public static final int WIDTH = 674;
-    public static final int HEIGHT = 485;
-    private JButton btnOK;
     private SinglePlayerRulesDialogController singlePlayerRulesDialogController;
+    
+    private JButton btnOK;
 
     public SinglePlayerRulesDialog(SinglePlayerPanel singlePlayerPanel) {
         this.singlePlayerPanel = singlePlayerPanel;
@@ -29,7 +30,7 @@ public class SinglePlayerRulesDialog extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         btnOK = Untils.getButton(ImagePaths.GAME_OK_1, ImagePaths.GAME_OK_2);
-        btnOK.setBounds(312, 425, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
+        btnOK.setBounds(312, 450, Constant.GAME_BUTTON_WIDTH, Constant.GAME_BUTTON_HEIGHT);
         btnOK.setActionCommand("OK");
         btnOK.addActionListener(singlePlayerRulesDialogController);
         add(btnOK);

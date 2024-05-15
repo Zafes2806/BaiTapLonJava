@@ -1,9 +1,9 @@
-package controller.dialog;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import DAO.SinglePlayerDao;
+import DAO.SinglePlayerDAO;
 import sound.Sounds;
 import view.dialog.SinglePlayerOptionsDialog;
 import view.panel.SinglePlayerPanel;
@@ -26,7 +26,7 @@ public class SinglePlayerOptionsDialogController implements ActionListener {
             singlePlayerPanel.closeSinglePlayerOptionsDialog();
             singlePlayerPanel.startSinglePlayer();
             singlePlayerPanel.getSinglePlayerDialog().pause();
-            if (SinglePlayerDao.continueSingleplayer(singlePlayerPanel.getSinglePlayerDialog()))
+            if (SinglePlayerDAO.continueSingleplayer(singlePlayerPanel.getSinglePlayerDialog()))
                 singlePlayerPanel.getSinglePlayerDialog().resume();
             else {
                 singlePlayerPanel.getSinglePlayerDialog().close();

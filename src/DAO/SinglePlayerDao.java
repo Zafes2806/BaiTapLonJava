@@ -13,7 +13,7 @@ import view.object.Tool;
 import view.object.ToolBoard;
 import view.object.ToolDice;
 
-public class SinglePlayerDao {
+public class SinglePlayerDAO {
     public static void save(SinglePlayerDialog singlePlayerDialog) {
         try {
             FileWriter fileWriter = new FileWriter("resource/data/dataSinglePlayer.txt");
@@ -35,6 +35,10 @@ public class SinglePlayerDao {
             }
             printWriter.println(singlePlayerDialog.getToolBoard().getChoiceX());
             printWriter.println(singlePlayerDialog.getToolBoard().getChoiceY());
+            printWriter.println(singlePlayerDialog.getToolBoard().getPreChoiceX());
+            printWriter.println(singlePlayerDialog.getToolBoard().getPreChoiceY());
+            printWriter.println(singlePlayerDialog.getToolBoard().getSecondPreChoiceX());
+            printWriter.println(singlePlayerDialog.getToolBoard().getSecondPreChoiceY());
             Tool tool[] = singlePlayerDialog.getToolDice().getTools();
             for (int i = 0; i < tool.length; i++) {
                 if (tool[i] instanceof Rock)
@@ -53,7 +57,7 @@ public class SinglePlayerDao {
     }
 
     public static boolean continueSingleplayer(SinglePlayerDialog singlePlayerDialog) {
-       
+
         try {
             FileReader fileReader = new FileReader("resource/data/dataSinglePlayer.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -62,12 +66,12 @@ public class SinglePlayerDao {
             int remainingMoves;
             int remainingTime;
             int a1[][] = new int[9][9];
-            int x, y;
+            int choiceX, choiceY, preChoiceX, preChoiceY, secondPreChoiceX, secondPreChoiceY;
             int a2[] = new int[6];
             String line;
             if ((line = bufferedReader.readLine()) != null) {
                 playerName = line;
-               
+
             } else {
                 bufferedReader.close();
                 return false;
@@ -101,14 +105,37 @@ public class SinglePlayerDao {
                 }
             }
             if ((line = bufferedReader.readLine()) != null) {
-                x = Integer.parseInt(line);
+                choiceX = Integer.parseInt(line);
             } else {
                 bufferedReader.close();
                 return false;
             }
             if ((line = bufferedReader.readLine()) != null) {
-                y = Integer.parseInt(line);
-                
+                choiceY = Integer.parseInt(line);
+            } else {
+                bufferedReader.close();
+                return false;
+            }
+            if ((line = bufferedReader.readLine()) != null) {
+                preChoiceX = Integer.parseInt(line);
+            } else {
+                bufferedReader.close();
+                return false;
+            }
+            if ((line = bufferedReader.readLine()) != null) {
+                preChoiceY = Integer.parseInt(line);
+            } else {
+                bufferedReader.close();
+                return false;
+            }
+            if ((line = bufferedReader.readLine()) != null) {
+                secondPreChoiceX = Integer.parseInt(line);
+            } else {
+                bufferedReader.close();
+                return false;
+            }
+            if ((line = bufferedReader.readLine()) != null) {
+                secondPreChoiceY = Integer.parseInt(line);
             } else {
                 bufferedReader.close();
                 return false;
@@ -121,9 +148,8 @@ public class SinglePlayerDao {
                     return false;
                 }
             }
-            ToolBoard toolBoard = new ToolBoard(a1, x, y);
-            System.out.println(toolBoard.getChoiceX());
-            singlePlayerDialog.update(playerName, playerScore, remainingMoves, remainingTime, new ToolBoard(a1, x, y),
+            singlePlayerDialog.update(playerName, playerScore, remainingMoves, remainingTime,
+                    new ToolBoard(a1, choiceX, choiceY, preChoiceX, preChoiceY, secondPreChoiceX, secondPreChoiceY),
                     new ToolDice(a2));
             bufferedReader.close();
         } catch (IOException e) {

@@ -5,19 +5,18 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.dialog.MenuDialogController;
+import controller.MenuDialogController;
 import untils.ImagePaths;
 import untils.Untils;
 import view.panel.MenuPanel;
 
 public class MenuDialog extends JPanel {
-
-    private MenuDialogController menuDialogController;
     public static final int WIDTH = 217;
     public static final int HEIGHT = 491;
 
+    private MenuDialogController menuDialogController;
+
     private MenuPanel menuPanel;
-    
     private JButton btnSinglePlayer;
     private JButton btnTwoPlayer;
     private JButton btnSettings;
@@ -65,10 +64,6 @@ public class MenuDialog extends JPanel {
         btnExit.setActionCommand("Exit");
         btnExit.addActionListener(menuDialogController);
         this.add(btnExit);
-    }
-
-    public void exitGame() {
-        System.exit(1);
     }
 
     public void open() {

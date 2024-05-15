@@ -57,7 +57,7 @@ public class MenuPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image imageBackGround = new ImageIcon(ImagePaths.BACKGROUND_MENU_PANEL).getImage();
-        g.drawImage(imageBackGround, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(imageBackGround, 0, 0, WIDTH, HEIGHT, this);
     }
 
     public GameScreen getGameScreen() {

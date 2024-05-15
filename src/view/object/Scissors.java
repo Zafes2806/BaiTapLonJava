@@ -16,7 +16,7 @@ public class Scissors extends Tool {
     public int compareTo(Tool o) {
         if (o instanceof Scissors)
             return 0;
-        if (o instanceof Paper)
+        if (o instanceof Rock)
             return -1;
         return 1;
     }

@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.dialog.SinglePlayerOptionsDialogController;
+import controller.SinglePlayerOptionsDialogController;
 import untils.ImagePaths;
 import untils.Untils;
 import view.panel.SinglePlayerPanel;
@@ -16,7 +16,6 @@ public class SinglePlayerOptionsDialog extends JPanel {
     public static final int HEIGHT = 236;
 
     private SinglePlayerOptionsDialogController singlePlayerOptionsDialogController;
-
     private SinglePlayerPanel SinglePlayerPanel;
 
     private JButton btnContinue;
